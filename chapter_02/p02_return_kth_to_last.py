@@ -1,5 +1,8 @@
 from chapter_02.linked_list import LinkedList
 
+'''
+Once the leader reaches the end of the linked list, the follower will be pointing at the kth to last node because it started moving only after the leader had moved k steps.
+'''
 
 def kth_to_last(ll, k):
     leader = follower = ll.head
