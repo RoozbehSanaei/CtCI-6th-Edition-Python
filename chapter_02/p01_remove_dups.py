@@ -18,7 +18,9 @@ def remove_dups(ll):
     ll.tail = previous
     return ll
 
-
+'''
+Does not use any additional data structures like a set. Instead, for each node, it uses a runner approach where it checks all the subsequent nodes for duplicates of the current node's value and removes them
+'''
 def remove_dups_followup(ll):
     runner = current = ll.head
     while current:
