@@ -15,6 +15,11 @@ def kth_to_last(ll, k):
         leader = leader.next
     return follower
 
+'''
+The function uses recursion to traverse to the end of the linked list. 
+As it backtracks from the end, it counts the nodes in reverse order. When the count matches k, 
+the current node is the kth-to-last node, which the function then returns.
+'''
 
 # O(N) space
 def kth_last_recursive(ll, k):
