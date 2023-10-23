@@ -1,5 +1,12 @@
 from chapter_02.linked_list import LinkedList
 
+'''
+fast and slow pointers both start at the head of the linked list (ll.head).
+fast moves two steps at a time, while slow moves one step at a time.
+If there's a loop, the fast pointer will eventually catch up to the slow pointer, and the while loop will break.
+If there's no loop, then fast will reach the end of the list, and the function will return None.
+If a loop is detected, a second while loop is used to find the starting node of the loop in the linked list.
+'''
 
 def loop_detection(ll):
     fast = slow = ll.head
