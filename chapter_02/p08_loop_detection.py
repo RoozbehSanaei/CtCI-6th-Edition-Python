@@ -6,7 +6,8 @@ fast moves two steps at a time, while slow moves one step at a time.
 If there's a loop, the fast pointer will eventually catch up to the slow pointer, and the while loop will break.
 If there's no loop, then fast will reach the end of the list, and the function will return None.
 If a loop is detected, a second while loop is used to find the starting node of the loop in the linked list.
-If a loop is detected, the slow pointer is reset to the head of the linked list. Both slow and fast pointers then move one node at a time until they meet again. When they meet, that node is the starting node of the loop.
+If a loop is detected, the slow pointer is reset to the head of the linked list. Both slow and fast pointers then move one node at a time until they meet again. 
+When they meet, that node is the starting node of the loop.
 '''
 
 def loop_detection(ll):
