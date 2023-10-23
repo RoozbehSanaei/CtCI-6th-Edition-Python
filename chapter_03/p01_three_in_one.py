@@ -1,5 +1,8 @@
 import pytest
 
+'''
+Describe how you could use a single array to implement three stacks.
+'''
 
 class MultiStack:
     def __init__(self, stack_size, number_of_stacks):
