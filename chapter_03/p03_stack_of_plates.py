@@ -39,6 +39,13 @@ class Stack:
     def is_empty(self):
         return self.size == 0
 
+
+    '''
+    The join method links two nodes together within a stack. 
+    It sets the above pointer of the "below" node to point to the "above" node,
+    and the below pointer of the "above" node to point to the "below" node.
+    '''
+
     def join(self, above, below):
         if below:
             below.above = above
@@ -50,6 +57,12 @@ class Stack:
             return False
         self.size += 1
         n = Node(v)
+        
+        '''
+        If you're adding the first element to an empty stack, 
+        that element becomes both the top and the bottom of the stack, so self.bottom is set to n.
+        '''
+        
         if self.size == 1:
             self.bottom = n
         self.join(n, self.top)
@@ -108,13 +121,20 @@ class SetOfStacks:
     def pop_at(self, index):
         return self.left_shift(index, True)
 
+'''
+The left_shift method is used for balancing stacks after a pop_at operation. 
+It removes an item from a specific stack at the given index and then shifts items from the next stack to fill in the gap, if needed.
+'''
     def left_shift(self, index, remove_top):
         stack = self.stacks[index]
         removed_item = stack.pop() if remove_top else stack.remove_bottom()
         if stack.is_empty():
             del self.stacks[index]
+# Check if there's another stack to the right of the current one.
         elif len(self.stacks) > index + 1:
+            # Remove the bottom item from the next stack to the right.
             v = self.left_shift(index + 1, False)
+            # Push that removed item to the top of the current stack.
             stack.push(v)
         return removed_item
 
