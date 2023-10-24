@@ -24,10 +24,27 @@ def is_route(graph, start, end, visited=None):
     for node in graph[start]:
         if node not in visited:
             visited.add(node)
+                '''
+                If the current node is the end node (node == end), it means we've found a route, so the function returns True.
+                If the current node isn't the end node, the function calls itself recursively (is_route(graph, node, end, visited))
+                to explore paths from this new node to the end node. If any of those paths lead to the end node, the function returns True.
+                '''
             if node == end or is_route(graph, node, end, visited):
                 return True
     return False
 
+
+'''
+If start and end are the same, it immediately returns True.
+Initialize an empty set visited to keep track of visited nodes.
+Initialize a queue (deque) and add the start node to it.
+Loop as long as the queue is not empty:
+Dequeue a node and check its adjacent nodes.
+If an adjacent node hasn't been visited and is the end node, return True.
+Otherwise, enqueue the unvisited adjacent nodes for later exploration.
+Mark the current node as visited.
+If the queue becomes empty and the end node hasn't been found, return False.
+'''
 
 def is_route_bfs(graph, start, end):
     if start == end:
