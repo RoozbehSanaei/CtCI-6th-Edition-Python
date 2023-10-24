@@ -82,31 +82,21 @@ class AnimalShelter(LinkedList):
     def dequeue_any(self):
         return super().pop_head()
 
-def dequeue_cat(self):
-    # Initialize 'previous_node' to None and 'current_node' to the head of the list
-    previous_node = None
-    current_node = self.head
-    
-    # Loop through the list to find a cat or reach the end of the list
-    while current_node is not None:
-        
-        # Check if the current node's data is a Cat object
-        if isinstance(current_node.data, Cat):
-            
-            # Remove the current node by updating the 'next_node' pointer of the previous node
-            previous_node.next_node = current_node.next_node
-            
-            # Return the data of the removed Cat node
-            return current_node.data
-        
-        # Move the 'previous_node' pointer to the current node
-        previous_node = current_node
-        
-        # Move to the next node in the list
-        current_node = current_node.next_node
-    
-    # If the loop completes without finding a cat, return None
-    return None
+'''
+Funcions start from the head of the list and uses two pointers (previous_node and current_node) to traverse the list. 
+When they find a cat/dog, they removes it from the list by updating the next_node pointer of the node that comes before it. 
+'''
+
+ def dequeue_cat(self):
+        previous_node = None
+        current_node = self.head
+        while current_node is not None:
+            if isinstance(current_node.data, Cat):
+                previous_node.next_node = current_node.next_node
+                return current_node.data
+            previous_node = current_node
+            current_node = current_node.next_node
+        return None
 
 
     def dequeue_dog(self):
