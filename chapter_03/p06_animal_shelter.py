@@ -22,13 +22,22 @@ class LinkedList:
     def __init__(self, head=None):
         self.head = head
 
+
+    '''
+    The insert method adds a new node at the end of a singly-linked list.
+    If the list is empty, the new node becomes the head; otherwise, it's added after the last node.
+    '''
+
     def insert(self, node):
         if self.head is None:
             self.head = node
             return
         current_node = self.head
+        # it goes through the list until it reaches the last node.
         while current_node.next_node is not None:
+            # effectively going to the next node.
             current_node = current_node.next_node
+        # attaches the new node to the end of the list.
         current_node.next_node = node
 
     def pop_head(self):
