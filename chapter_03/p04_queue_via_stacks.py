@@ -9,6 +9,10 @@ class MyQueue:
         self.new_stack = Stack()
         self.old_stack = Stack()
 
+
+    '''
+    The method effectively reverses the order of elements from new_stack and puts them into old_stack, making the earliest enqueued element available at the top of old_stack for easy dequeueing.
+    '''
     def _shift_stacks(self):
         if self.old_stack.is_empty():
             while not self.new_stack.is_empty():
