@@ -9,7 +9,16 @@ class Node:
 class BinarySearchTree:
     def __init__(self):
         self.root = None
+'''
+a Python method for inserting a new node with a given key into a binary search tree (BST). Here's a quick rundown of what it does:
 
+First, it creates a new node with the given key.
+If the tree is empty (self.root is None), it sets the root of the tree to the new node.
+If the tree isn't empty, it starts from the root and traverses the tree :
+    If key is smaller than the current node's key, it goes left.
+    If key is greater or equal, it goes right.
+    When it finds a None spot (either current.left or current.right), it inserts the new node there and sets the parent link.
+'''
     def insert(self, key):
         new = Node(key)
         if self.root is None:
@@ -30,6 +39,8 @@ class BinarySearchTree:
                     new.parent = current
                     return
                 current = current.right
+
+
 
     def get_node(self, key):
         current = self.root
