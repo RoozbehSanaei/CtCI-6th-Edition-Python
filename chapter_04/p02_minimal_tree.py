@@ -4,6 +4,13 @@ class Node:
         self.left = None
         self.val = item
 
+    '''
+    Display the structure of a binary tree in a formatted string. 
+    Starting from the root, it traverses down each node recursively and indents the child nodes to visually represent their depth or "nesting" level in the tree.
+    It uses "L:" and "R:" to label left and right children, respectively.
+    '''
+
+    
     def disp(self, nesting=0):
         indent = " " * nesting * 2
         output = f"{self.val}\n"
