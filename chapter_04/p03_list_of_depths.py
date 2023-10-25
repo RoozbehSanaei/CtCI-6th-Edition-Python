@@ -9,26 +9,44 @@ class BinaryNode:
         self.left = left
         self.right = right
 
+'''
+List of Depths: Given a binary tree, design an algorithm which creates a linked list of all the nodes
+at each depth (e.g., if you have a tree with depth D, you'll have D linked lists).
+'''
+
+from collections import deque
 
 def create_node_list_by_depth(tree_root):
-    # BFS.
+    # Initialize an empty dictionary to hold the linked lists for each depth.
     levels = {}
+    
+    # Initialize a deque for Breadth-First Search (BFS).
     q = deque()
+    
+    # Start with the root node at level 0.
     q.append((tree_root, 0))
 
+    # Loop until the deque is empty.
     while len(q) > 0:
+        # Dequeue a node and its level.
         node, level = q.popleft()
+        
+        # If this level is not in 'levels' yet, add it.
         if level not in levels:
-            # First node in the level
             levels[level] = LinkedList()
-        # Nodes already exist
+        
+        # Add the dequeued node to the linked list for its level.
         levels[level].add(node)
 
-        # Push onto queue
+        # Enqueue the left child with incremented level if it exists.
         if node.left:
             q.append((node.left, level + 1))
+        
+        # Enqueue the right child with incremented level if it exists.
         if node.right:
             q.append((node.right, level + 1))
+    
+    # Return the dictionary with levels as keys and linked lists of nodes as values.
     return levels
 
 
