@@ -72,12 +72,16 @@ def is_route_bidirectional(graph, start, end):
     visited_start.add(start)
     visited_end = set()
     visited_end.add(end)
+    
+    # Loop until there are no more nodes to visit
     while to_visit:
+         # Remove and get the node from the left side of the deque
         node = to_visit.popleft()
 
         if node in visited_start and node in visited_end:
             return True
 
+        # Loop through neighbors of the current node
         for y in graph[node]:
             if node in visited_start and y not in visited_start:
                 visited_start.add(y)
