@@ -25,6 +25,11 @@ class Node:
     def __str__(self):
         return self.disp()
 
+'''
+The essence of the array_to_binary_tree algorithm is to convert a sorted array into a balanced binary search tree (BST) by recursively selecting the middle element as the root and then doing the same for the left and right halves of the array.
+'''
+
+
 
 def array_to_binary_tree(array, start, end):
     if start > end:
