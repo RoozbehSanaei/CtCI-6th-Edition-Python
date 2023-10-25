@@ -51,22 +51,41 @@ def create_node_list_by_depth(tree_root):
 
 
 def create_node_list_by_depth_b(tree):
+    # If the tree is empty, return an empty list.
     if not tree:
         return []
-
+    
+    # Initialize 'curr' to point to the root of the tree.
     curr = tree
+    
+    # Initialize 'result' as a list of a single linked list containing the root node.
     result = [LinkedList([curr])]
+    
+    # Initialize 'level' to keep track of the current depth.
     level = 0
 
+    # Loop as long as the linked list at the current level is not empty.
     while result[level]:
+        # Append an empty linked list for the next level.
         result.append(LinkedList())
+        
+        # Iterate over each node in the linked list at the current level.
         for linked_list_node in result[level]:
+            # Retrieve the actual tree node from the linked list node.
             n = linked_list_node.value
+            
+            # If the left child exists, add it to the linked list for the next level.
             if n.left:
                 result[level + 1].add(n.left)
+            
+            # If the right child exists, add it to the linked list for the next level.
             if n.right:
                 result[level + 1].add(n.right)
+        
+        # Increment 'level' to move on to the next depth.
         level += 1
+    
+    # Return the list of linked lists.
     return result
 
 
