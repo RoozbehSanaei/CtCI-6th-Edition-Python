@@ -63,6 +63,12 @@ def is_route_bfs(graph, start, end):
         visited.add(node)
     return False
 
+'''
+is to perform a simultaneous breadth-first search (BFS) starting from both the start and end nodes. 
+It uses a deque to keep track of which nodes to visit next and two sets to keep track of the nodes visited from each end. 
+The algorithm continues to search outwards from both ends until it either finds a node that has been visited from both ends, 
+indicating a bidirectional route, or exhausts all nodes to visit, indicating no such route exists.
+'''
 
 def is_route_bidirectional(graph, start, end):
     to_visit = deque()
