@@ -1,5 +1,17 @@
 from chapter_04.binary_search_tree import BinarySearchTree
 
+'''
+Successor: Write an algorithm to find the "next" node (i.e., in-order successor) of a given node in a
+binary search tree. You may assume that each node has a link to its parent.
+''''
+
+
+'''
+ If the node has a right subtree, the successor is the leftmost node in that right subtree. 
+ If not, it goes up the tree until it finds an ancestor where the given node is in the left subtree. 
+ It returns the successor node or None if there isn't one.
+ '''
+ 
 
 def in_order_successor(input_node):
     if input_node is None:
