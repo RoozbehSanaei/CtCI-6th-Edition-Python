@@ -1,5 +1,17 @@
 from chapter_04.binary_search_tree import BinarySearchTree
 
+'''
+Initialization: The function initializes an empty list, ret_backtracking, to hold the valid sequences and starts the backtracking from the root of the tree.
+
+Backtracking Function: The inner function backtracking takes two parameters:
+
+choices: Nodes that could be next in the sequence.
+weave: The current sequence being formed.
+Base Case: If choices is empty, a valid sequence is found and added to ret_backtracking.
+
+Recursive Case: For each node in choices, it removes that node from future choices and adds its children (if any) to the list of next possible choices. Then, it recurses with these new choices and an updated weave.
+'''
+
 
 def find_bst_sequences(bst):
     if not bst.root:
