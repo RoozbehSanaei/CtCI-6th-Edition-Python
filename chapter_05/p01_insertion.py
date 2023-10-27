@@ -6,6 +6,9 @@ M = 10011, you can assume that there are at least 5 bits between j and i. You wo
 example, have j = 3 and i = 2, because M could not fully fit between bit 3 and bit 2.
 '''
 
+
+
+
 def bits_insertion(n, m, i, j):
     ones_left = -1 << (j + 1)  # shift 1s over to the left, before position j
     ones_right = (1 << i) - 1  # place 1s to the right of position i
@@ -13,6 +16,11 @@ def bits_insertion(n, m, i, j):
     cleared = n & mask  # zero bits in positions j through i
     moved = m << i  # shift m over i places, prepped for n insertion
     return cleared | moved  # answer is the value after insertion
+
+'''
+If a bit in m is 1, the corresponding bit in n is set to 1: n |= 1 << (idx + i).
+If a bit in m is 0, the corresponding bit in n is cleared (set to 0): n &= ~(1 << (idx + i)).
+'''
 
 
 def bits_insertion_easy_to_understand(n, m, i, j):
