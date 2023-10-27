@@ -1,3 +1,9 @@
+'''
+Conversion: Write a function to determine the number of bits you would need to flip to convert
+integer A to integer B.
+'''
+
+
 def bit_swap_required(a: int, b: int) -> int:
     count, c = 0, a ^ b
     while c:
