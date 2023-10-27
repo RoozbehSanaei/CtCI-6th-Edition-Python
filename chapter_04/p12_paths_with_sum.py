@@ -2,6 +2,12 @@ from chapter_04.binary_tree import BinaryTree
 
 # Brute Force O(NlogN)
 
+'''
+Paths with Sum: You are given a binary tree in which each node contains an integer value (which
+might be positive or negative). Design an algorithm to count the number of paths that sum to a
+given value. The path does not need to start or end at the root or a leaf, but it must go downwards
+(traveling only from parent nodes to child nodes).
+'''
 
 def count_sum_paths(tree, target):
     if not isinstance(tree, BinaryTree):
@@ -22,6 +28,11 @@ def _count_sum_paths(node, target_sum):
 def pathsfrom(node, target_sum):
     if not node:
         return 0
+    '''
+    Subtracting the node's value from target_sum lets us know if we've found a valid path that adds up to the original target. 
+    If it reaches zero, we increment the counter.
+    '''
+    
     target_sum -= node.key
     counter = 0
     if target_sum == 0:
@@ -39,7 +50,6 @@ def count_sum_paths_optimized(tree, target_sum):
         return None
     return _count_sum_paths_optimizied(tree.root, target_sum)
 
-
 def _count_sum_paths_optimizied(node, target_sum, running=0, hashtable=None):
     if hashtable is None:
         hashtable = {}
@@ -55,6 +65,9 @@ def _count_sum_paths_optimizied(node, target_sum, running=0, hashtable=None):
         node.right, target_sum, running, hashtable
     )
     total += left_count + right_count
+    '''
+    Because that particular "running sum" is no longer valid once you've gone back up to the parent node to explore a different path. 
+    '''
     increment(hashtable, running, -1)
     return total
 
