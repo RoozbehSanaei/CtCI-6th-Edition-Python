@@ -1,5 +1,16 @@
 from collections import deque
 
+'''
+Towers of Hanoi: In the classic problem of the Towers of Hanoi, you have 3 towers and N disks of
+different sizes which can slide onto any tower. The puzzle starts with disks sorted in ascending order
+of size from top to bottom (i.e., each disk sits on top of an even larger one). You have the following
+constraints:
+(1) Only one disk can be moved at a time.
+(2) A disk is slid off the top of one tower onto another tower.
+(3) A disk cannot be placed on top of a smaller disk.
+Write a program to move the disks from the first tower to the last using stacks.
+'''
+
 
 # Custom Exceptions
 class StackTooBigError(Exception):
@@ -78,6 +89,12 @@ class TowersOfHanoi:
             print(f"Solving Towers of Hanoi - {self.stack_size} size")
         return self.__toh_solve(self.stack_size, 0, 1, 2)
 
+    '''
+    First Recursive Call: Move n−1n−1 disks from peg aa to temporary peg bb, using cc as a secondary temporary peg.
+    Move Largest Disk: Move the remaining largest disk from aa to cc.
+    Second Recursive Call: Move the n−1n−1 disks from temporary peg bb to destination peg cc, using aa as a temporary peg again.
+    '''
+    
     def __toh_solve(self, n, a, b, c):
         if n > 0:
             self.__toh_solve(n - 1, a, c, b)
