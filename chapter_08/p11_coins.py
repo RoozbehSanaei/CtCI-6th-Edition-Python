@@ -1,5 +1,11 @@
 STANDARD_COIN_SIZES = [1, 5, 10, 25]
 
+'''
+Coins: Given an infinite number of quarters (25 cents), dimes (10 cents), nickels (5 cents), and
+pennies (1 cent), write code to calculate the number of ways of representing n cents.
+'''
+
+
 
 def coin_combinations(amount, coin_sizes=None):
     if amount == 0:
@@ -12,6 +18,11 @@ def coin_combinations(amount, coin_sizes=None):
     if len(coin_sizes) == 0:
         return 0
     m = len(coin_sizes)
+
+    '''
+    The total number of ways to make change for amount is the sum of the ways to make change without the last coin and the ways to make change with the last coin
+    "last coin" specifically refers to the coin of size coin_sizes[m - 1], which is the last coin in the list of coin_sizes.
+    '''
     return coin_combinations(amount, coin_sizes[: m - 1]) + coin_combinations(
         amount - coin_sizes[m - 1], coin_sizes
     )
