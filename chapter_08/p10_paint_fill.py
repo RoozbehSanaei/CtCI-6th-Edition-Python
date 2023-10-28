@@ -2,6 +2,13 @@ import unittest
 from typing import List
 
 
+'''
+Paint Fill: Implement the "paint fill" function that one might see on many image editing programs.
+That is, given a screen (represented by a two-dimensional array of colors), a point, and a new color,
+fill in the surrounding area until the color changes from the original color.
+'''
+
+
 def flood_fill(screen: List[List[int]], i: int, j: int, color: int, new_color: int):
     if (
         i < 0
