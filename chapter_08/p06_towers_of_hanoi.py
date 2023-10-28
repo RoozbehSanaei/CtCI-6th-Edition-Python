@@ -90,9 +90,9 @@ class TowersOfHanoi:
         return self.__toh_solve(self.stack_size, 0, 1, 2)
 
     '''
-    First Recursive Call: Move n−1n−1 disks from peg aa to temporary peg bb, using cc as a secondary temporary peg.
+    First Recursive Call: Move n−1 disks from peg aa to temporary peg bb, using cc as a secondary temporary peg.
     Move Largest Disk: Move the remaining largest disk from aa to cc.
-    Second Recursive Call: Move the n−1n−1 disks from temporary peg bb to destination peg cc, using aa as a temporary peg again.
+    Second Recursive Call: Move the n−1 disks from temporary peg bb to destination peg cc, using aa as a temporary peg again.
     '''
     
     def __toh_solve(self, n, a, b, c):
