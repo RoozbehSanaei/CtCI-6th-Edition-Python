@@ -2,6 +2,13 @@ import copy
 import unittest
 
 
+
+'''
+Eight Queens: Write an algorithm to print all ways of arranging eight queens on an 8x8 chess board
+so that none of them share the same row, column, or diagonal. In this case, "diagonal" means all
+diagonals, not just the two that bisect the board.
+'''
+
 def position_is_valid(row, col, board):
 
     # Check if there are any queens in the rows above this position
@@ -36,24 +43,42 @@ def position_is_valid(row, col, board):
     return True
 
 
+
+# Importing deepcopy to make copies of the board
+# from copy import deepcopy  # Uncomment this if 'copy' is not imported in your code
+
 def queens(n=8):
+    # Nested helper function for backtracking algorithm
     def helper(row, board):
+        # If all rows have been processed, a valid arrangement has been found
         if row == n:
             arrangements.append(copy.deepcopy(board))
+            # Uncomment below to print each valid arrangement
             # print('$'*20)
             # pprint.pprint(board)
             # print('$'*20)
         else:
+            # Loop through each column in the current row
             for col in range(len(board[row])):
+                # Check if placing a queen here is valid
                 if position_is_valid(row, col, board):
+                    # Place the queen
                     board[row][col] = "Q"
+                    # Make a deep copy of the board and move to the next row
                     helper(row + 1, copy.deepcopy(board))
+                    # Remove the queen and backtrack
                     board[row][col] = "."
+                    # Uncomment below to see board state while backtracking
                     # pprint.pprint(board)
 
+    # List to store all valid board arrangements
     arrangements = []
+    # Call helper function starting from the first row and an empty 8x8 board
     helper(0, [["." for _ in range(8)] for _ in range(8)])
+    # Return all valid arrangements
     return arrangements
+
+
 
 
 class TestSuite(unittest.TestCase):
