@@ -1,7 +1,8 @@
 import unittest
 
 '''
-You can think of each permutation as a kind of "number," where each element or digit contributes to its lexicographic "value." Just like how you find the next integer by looking at the units place, tens place, hundreds place, etc., you do something similar to find the next permutation.
+You can think of each permutation as a kind of "number," where each element or digit contributes to its lexicographic "value." 
+Just like how you find the next integer by looking at the units place, tens place, hundreds place, etc., you do something similar to find the next permutation.
 
 In the context of numbers, to get the smallest number that's greater than the current one, you'd:
 
@@ -54,42 +55,61 @@ def generate_parentheses_permutations_brute_force(number_of_pairs):
     return possibilities
 
 
+# Function to generate all combinations of well-formed parentheses.
 def generate_parentheses_permutations_recursive_1(n):
-    def helper(
-        open_parentheses_remaining, closed_parentheses_remaining, current_string
-    ):
+    
+    # Inner helper function that takes the remaining number of open and closed parentheses and the current string.
+    def helper(open_parentheses_remaining, closed_parentheses_remaining, current_string):
+        
+        # Base case: If the length of the current string is n * 2, append it to the result list.
         if len(current_string) == n * 2:
             result.append(current_string)
+        
+        # If there are remaining open parentheses, add one and make a recursive call.
         if open_parentheses_remaining > 0:
             helper(
-                open_parentheses_remaining - 1,
-                closed_parentheses_remaining,
-                current_string + "(",
+                open_parentheses_remaining - 1,  # Decrement the count of open parentheses
+                closed_parentheses_remaining,     # Keep the count of closed parentheses
+                current_string + "(",             # Append an open parenthesis to the current string
             )
+        
+        # If there are more closed than open parentheses remaining, add a closed parenthesis and make a recursive call.
         if closed_parentheses_remaining > open_parentheses_remaining:
             helper(
-                open_parentheses_remaining,
-                closed_parentheses_remaining - 1,
-                current_string + ")",
+                open_parentheses_remaining,       # Keep the count of open parentheses
+                closed_parentheses_remaining - 1, # Decrement the count of closed parentheses
+                current_string + ")"              # Append a closed parenthesis to the current string
             )
 
+    # Initialize an empty list to store the results.
     result = []
+    
+    # Start the recursion with n open and n closed parentheses, and an empty current string.
     helper(n, n, "")
+    
+    # Return the list of all valid combinations.
     return result
 
 
+
+# Function to recursively add well-formed parentheses into a list (arr).
 def add_paren(arr, left_rem, right_rem, string_arr, idx):
-    if left_rem < 0 or right_rem < left_rem:  # invalid
+    
+    # Check for invalid conditions: if there are negative left or right parentheses or if right < left.
+    if left_rem < 0 or right_rem < left_rem:
         return
-    if left_rem == 0 and right_rem == 0:  # out of left and right parentheses
+    
+    # Base case: If no more left and right parentheses remain, convert string_arr to string and append to arr.
+    if left_rem == 0 and right_rem == 0:
         elem = "".join(string_arr)
         arr.append(elem)
-
     else:
-        string_arr[idx] = "("  # add left and recurse
+        # Add an open parenthesis "(" and make a recursive call with decremented left_rem and incremented idx.
+        string_arr[idx] = "("
         add_paren(arr, left_rem - 1, right_rem, string_arr, idx + 1)
 
-        string_arr[idx] = ")"  # add right and recurse
+        # Add a closed parenthesis ")" and make a recursive call with decremented right_rem and incremented idx.
+        string_arr[idx] = ")"
         add_paren(arr, left_rem, right_rem - 1, string_arr, idx + 1)
 
 
