@@ -1,4 +1,11 @@
 # naive implementation
+
+'''
+Recursive Multiply: Write a recursive function to multiply two positive integers without using the
+*operator.You can use addition, subtraction, and bit shifting, but you should minimize the number
+of those operations.
+'''
+
 def multiply(a, b, answer):
     if answer == 0 and a != 0 and b != 0:
         answer = a
@@ -85,16 +92,29 @@ def min_product_3_helper(smaller, bigger):
     return half_prod + half_prod + bigger
 
 
-# solution 4 # non-recursive
-def multiply_bit_based(a, b):
-    b_bin = bin(b)
-    b_bin = b_bin[2:]
-    prod = 0
-    for i in range(len(b_bin)):  # O(len_b)
-        if int(b_bin[-i - 1]):
-            prod = prod + (a << i)
 
+# Solution 4 (non-recursive)
+def multiply_bit_based(a, b):
+    # Convert integer 'b' to its binary representation as a string
+    b_bin = bin(b)
+  
+    # Slice off the '0b' prefix to keep only the binary digits
+    b_bin = b_bin[2:]
+  
+    prod = 0
+  
+    # Iterate over the length of the binary representation of 'b'
+    for i in range(len(b_bin)):  # O(len(b_bin))
+  
+        # Check if the bit at the i-th position from the right is 1
+        if int(b_bin[-i - 1]):
+  
+            # Left-shift 'a' by 'i' bits and add it to 'prod'
+            prod = prod + (a << i)
+  
+    # Return the final product
     return prod
+
 
 
 test_cases = [(5, 6), (28, 89), (1234, 245334)]
