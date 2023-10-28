@@ -1,3 +1,9 @@
+'''
+Write a method to compute all permutations of a string whose charac-
+ters are not necessarily unique. The list of permutations should not have duplicates.
+'''
+
+
 def print_perms(string):
     result = []
     letter_count_map = build_freq_table(string)
@@ -28,6 +34,9 @@ def print_perms_inner(letter_count_map, prefix, remaining, result):
             print_perms_inner(
                 letter_count_map, prefix + character, remaining - 1, result
             )
+            '''
+            Backtrack: Reset the count for the current character to its original value for further iterations
+            '''
             letter_count_map[character] = count
 
 
