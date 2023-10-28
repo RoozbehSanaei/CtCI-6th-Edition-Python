@@ -3,6 +3,14 @@ You are given two sorted arrays, A and B, where A has a large enough buffer at t
 end to hold B. Write a method to merge B into A in sorted order.
 '''
 
+'''
+The key trick is that the merging process starts from the end of each array and works its way to the beginning. 
+This allows the algorithm to take advantage of the sorted nature of the arrays, 
+so it can place the largest elements at the end first and proceed in descending order. 
+This ensures that smaller elements don't overwrite larger ones as the algorithm progresses.
+'''
+
+
 def sorted_merge(a, b):
     # Initialize index to point to the last element of array 'a'
     index = len(a) - 1
