@@ -1,5 +1,22 @@
 import unittest
 
+'''
+You can think of each permutation as a kind of "number," where each element or digit contributes to its lexicographic "value." Just like how you find the next integer by looking at the units place, tens place, hundreds place, etc., you do something similar to find the next permutation.
+
+In the context of numbers, to get the smallest number that's greater than the current one, you'd:
+
+    Start from the rightmost digit (least significant) and look for the first digit that can be incremented without rolling over to 0.
+    Increment that digit by 1.
+    Set all the digits to the right of that one to 0 (their minimum value).
+
+For permutations:
+
+    Start from the rightmost element and look for the first pair (a[i-1], a[i]) where a[i-1] < a[i] (equivalent to finding a digit you can increment).
+    Swap a[i-1] with the smallest element greater than it that's to its right (like incrementing that digit).
+    Reverse the elements to the right of a[i-1] to sort them in ascending order (like setting the digits to the right to their minimum value).
+'''
+
+
 
 def next_permutation(arr):
     i = len(arr) - 1
