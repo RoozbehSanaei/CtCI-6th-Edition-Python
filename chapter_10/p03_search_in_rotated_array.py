@@ -1,5 +1,14 @@
 from typing import Optional, Sequence
 
+'''
+[4, 5, 6, 7, 0, 1, 2]
+
+Iteration | lo | hi | mid | nums[mid] | is_mid_left_of_wraparound | is_target_left_of_wraparound | Action         | New lo | New hi
+----------|----|----|-----|-----------|---------------------------|------------------------------|----------------|--------|-------
+1         | 0  | 6  | 3   | 7         | True                      | False                        | lo = mid + 1   | 4      | 6
+2         | 4  | 6  | 5   | 1         | False                     | False                        | hi = mid - 1   | 4      | 4
+3         | 4  | 4  | 4   | 0         | False                     | False                        | Return mid     | -      | -
+'''
 
 def index(nums: Sequence[int], target: int) -> Optional[int]:
     if not nums:
