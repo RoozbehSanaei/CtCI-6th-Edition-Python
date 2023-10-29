@@ -20,7 +20,10 @@ class RankNode(object):
     else:
       self.count = 1
     self.left_count = 0
-  
+
+
+# This method inserts a new integer into the BST and updates the relevant count and left_count values:
+
   def track(self, item):
     if self.data is None:
       self.data = item
@@ -38,7 +41,8 @@ class RankNode(object):
         self.right.track(item)
       else:
         self.right = RankNode(item)
-  
+  # This method calculates the rank of a given integer, which is defined as the number of integers smaller than it that have appeared in the stream so far:
+
   def get_rank(self, item):
     if self.data is None:
       return 0
