@@ -12,18 +12,29 @@ Output: {5, 1, 3, 2, 3}
 '''
 
 def peaks_and_valleys(array):
-  if len(array) < 3:
-    return
-  for ix in xrange(len(array) - 1):
-    # If this is a peak:
-    if ix % 2:
-      if array[ix] < array[ix + 1]:
-        array[ix], array[ix + 1] = array[ix + 1], array[ix]
-    # Otherwise, if this is a valley:
-    else:
-      if array[ix] > array[ix + 1]:
-        array[ix], array[ix + 1] = array[ix + 1], array[ix]
-
+    # If the array has less than three elements, it's not possible to properly create peaks and valleys.
+    # In this case, simply return the original array.
+    if len(array) < 3:
+        return array
+    
+    # Iterate through the array starting from index 1 (the second element),
+    # and skip every second element. The goal is to create peaks at every odd index.
+    for ix in range(1, len(array) - 1, 2):
+        
+        # Compare the current element (which we want to be a peak) with its previous neighbor.
+        # If the previous neighbor is greater, swap them.
+        # This operation ensures that array[ix] is not smaller than array[ix - 1].
+        if array[ix - 1] > array[ix]:
+            array[ix], array[ix - 1] = array[ix - 1], array[ix]
+            
+        # Now, compare the current element (which we are turning into a peak) with its next neighbor.
+        # If the next neighbor is greater, swap them.
+        # This operation ensures that array[ix] is not smaller than array[ix + 1].
+        if ix + 1 < len(array) and array[ix] < array[ix + 1]:
+            array[ix], array[ix + 1] = array[ix + 1], array[ix]
+    
+    # Return the modified array, which should now have peaks at every odd index.
+    return array
 
 import unittest
 
