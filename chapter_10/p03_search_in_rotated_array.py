@@ -45,32 +45,65 @@ def search_rotated(array: Sequence[int], num: int) -> Optional[int]:
     return _recursive_search(array, num, 0, len(array) - 1)
 
 
+'''
+----------------------------------------------------------------------------------------------------------------
+| Call Level | start | end | num | middle | array[middle] | result | Action Taken                               |
+----------------------------------------------------------------------------------------------------------------
+| 1st        | 0     | 6   | 0   | 3      | 7             | None   | Proceed to second call with start=4, end=6 |
+----------------------------------------------------------------------------------------------------------------
+| 2nd        | 4     | 6   | 0   | 5      | 1             | None   | Proceed to third call with start=4, end=5  |
+----------------------------------------------------------------------------------------------------------------
+| 3rd        | 4     | 5   | 0   | 4      | 0             | 4      | Target found, result=4                     |
+----------------------------------------------------------------------------------------------------------------
+'''
+
+# Recursive function to search for a number in a rotated sorted array
 def _recursive_search(array, num, start, end):
+    # Calculate the middle index of the current search range
     middle = (end - start) // 2 + start
+    
+    # Base case: If we find the target number, return its index
     if array[middle] == num:
         return middle
+    
+    # Base case: If the search range is empty, the number is not in the array
     if end - start <= 0:
         return None
-
-    result = None
-    if array[start] < array[middle]:  # left side is normal
+    
+    result = None  # Initialize result as None
+    
+    
+    # Case 1: Left half of the array is sorted: 
+    if array[start] < array[middle]:
+        # If the number is in the sorted range, search only in that half
         if array[start] <= num < array[middle]:
             result = _recursive_search(array, num, start, middle - 1)
+        # Otherwise, search in the other half
         else:
             result = _recursive_search(array, num, middle + 1, end)
-    elif array[middle] < array[end]:  # right side is normal
+            
+    # Case 2: Right half of the array is sorted
+    elif array[middle] < array[end]:
+        # If the number is in the sorted range, search only in that half
         if array[middle] < num <= array[end]:
             result = _recursive_search(array, num, middle + 1, end)
+        # Otherwise, search in the other half
         else:
             result = _recursive_search(array, num, start, middle - 1)
+    
+    # Case 3: Duplicates are present, and we don't know which half is sorted
     elif array[start] == array[middle]:
+        # If the middle element is different from the end, the right half is sorted
         if array[middle] != array[end]:
             result = _recursive_search(array, num, middle + 1, end)
+        # Otherwise, we must search in both halves
         else:
             result = _recursive_search(array, num, start, middle - 1)
             if result is None:
                 result = _recursive_search(array, num, middle + 1, end)
-    return result
+    
+    return result  # Return the result
+
 
 
 test_cases = [
