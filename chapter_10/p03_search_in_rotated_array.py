@@ -1,42 +1,55 @@
 from typing import Optional, Sequence
 
-'''
-[4, 5, 6, 7, 0, 1, 2]
-
-Iteration | lo | hi | mid | nums[mid] | is_mid_left_of_wraparound | is_target_left_of_wraparound | Action         | New lo | New hi
-----------|----|----|-----|-----------|---------------------------|------------------------------|----------------|--------|-------
-1         | 0  | 6  | 3   | 7         | True                      | False                        | lo = mid + 1   | 4      | 6
-2         | 4  | 6  | 5   | 1         | False                     | False                        | hi = mid - 1   | 4      | 4
-3         | 4  | 4  | 4   | 0         | False                     | False                        | Return mid     | -      | -
-'''
-
+# Function to find the index of a target element in a rotated sorted array
 def index(nums: Sequence[int], target: int) -> Optional[int]:
+    # Handle the case where the input array is empty
     if not nums:
         return None
-    # We cannot guarantee better than O(n) if there are duplicates.
+    
+    # Special case: if the first and last elements are the same, 
+    # we can't do better than O(n). We do a linear search in this case.
     if nums[0] == nums[-1]:
         try:
             return nums.index(target)
         except ValueError:
             return None
-
+    
+    # Determine if the target is to the left of the "wrap-around" point (smallest element)
     is_target_left_of_wraparound = target >= nums[0]
+    
+    # Initialize pointers for binary search
     lo, hi = 0, len(nums) - 1
+    
+    # Binary search loop
     while lo <= hi:
+        # Calculate mid-point
         mid = (lo + hi) // 2
+        # Determine if the middle element is to the left of the "wrap-around" point
         is_mid_left_of_wraparound = nums[mid] >= nums[0]
+        
+        # Check if the middle element is to the left of the "wrap-around" point,
+        # and the target is to the right of the "wrap-around" point.
         if is_mid_left_of_wraparound and not is_target_left_of_wraparound:
-            lo = mid + 1
+            lo = mid + 1  # Move the lower bound to mid + 1 to search the right half
+            
+        # Check if the middle element is to the right of the "wrap-around" point,
+        # and the target is to the left of the "wrap-around" point.
         elif not is_mid_left_of_wraparound and is_target_left_of_wraparound:
-            hi = mid - 1
+            hi = mid - 1  # Move the upper bound to mid - 1 to search the left half
+
+        # Regular binary search conditions below
         elif nums[mid] < target:
             lo = mid + 1
         elif nums[mid] > target:
             hi = mid - 1
         else:
+            # Target found
             assert nums[mid] == target
             return mid
+            
+    # Target not found
     return None
+
 
 
 def search_rotated(array: Sequence[int], num: int) -> Optional[int]:
@@ -44,18 +57,6 @@ def search_rotated(array: Sequence[int], num: int) -> Optional[int]:
         return None
     return _recursive_search(array, num, 0, len(array) - 1)
 
-
-'''
-----------------------------------------------------------------------------------------------------------------
-| Call Level | start | end | num | middle | array[middle] | result | Action Taken                               |
-----------------------------------------------------------------------------------------------------------------
-| 1st        | 0     | 6   | 0   | 3      | 7             | None   | Proceed to second call with start=4, end=6 |
-----------------------------------------------------------------------------------------------------------------
-| 2nd        | 4     | 6   | 0   | 5      | 1             | None   | Proceed to third call with start=4, end=5  |
-----------------------------------------------------------------------------------------------------------------
-| 3rd        | 4     | 5   | 0   | 4      | 0             | 4      | Target found, result=4                     |
-----------------------------------------------------------------------------------------------------------------
-'''
 
 # Recursive function to search for a number in a rotated sorted array
 def _recursive_search(array, num, start, end):
