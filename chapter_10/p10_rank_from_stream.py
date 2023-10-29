@@ -10,54 +10,60 @@ getRankOfNumber(l) 0
 getRankOfNumber(3) = 1
 getRankOfNumber(4) 3
 '''
-
 class RankNode(object):
-  def __init__(self, data=None):
-    self.data = data
-    self.left, self.right = None, None
-    if self.data is None:
-      self.count = 0
-    else:
-      self.count = 1
-    self.left_count = 0
+    def __init__(self, data=None):
+        # Initialize the node with the given data.
+        # If the node is created without data, it is considered empty, and 'count' is set to 0.
+        # 'left_count' is always initialized to 0.
+        self.data = data
+        self.left, self.right = None, None
+        self.count = 1 if self.data is not None else 0
+        self.left_count = 0
 
+  # This method inserts a new integer into the BST and updates the relevant count and left_count values:
+  ''' the "current node" starts as the root of the BST when the method is first called, and it changes as the method calls itself
+  recursively, traversing down the tree.'''
 
-# This method inserts a new integer into the BST and updates the relevant count and left_count values:
+    def track(self, item):
+        # If the current node is empty, set its data to the given item and initialize 'count' to 1.
+        if self.data is None:
+            self.data = item
+        # If the item is equal to the current node's data, increment 'count' by 1.
+        elif self.data == item:
+            self.count += 1
+        # If the item is smaller than the current node's data, update 'left_count' and insert the item in the left subtree.
+        elif self.data > item:
+            self.left_count += 1
+            if self.left:
+                self.left.track(item)
+            else:
+                self.left = RankNode(item)
+        # If the item is greater than the current node's data, insert the item in the right subtree.
+        else:
+            if self.right:
+                self.right.track(item)
+            else:
+                self.right = RankNode(item)
 
-  def track(self, item):
-    if self.data is None:
-      self.data = item
-      self.count = 1
-    elif self.data == item:
-      self.count += 1
-    elif self.data > item:
-      if self.left:
-        self.left.track(item)
-      else:
-        self.left = RankNode(item)
-      self.left_count += 1
-    else:
-      if self.right:
-        self.right.track(item)
-      else:
-        self.right = RankNode(item)
-  # This method calculates the rank of a given integer, which is defined as the number of integers smaller than it that have appeared in the stream so far:
+    def get_rank(self, item):
+        # If the current node is empty, return 0 (the item is not in the tree).
+        if self.data is None:
+            return 0
+        # If the item is equal to the current node's data, return 'left_count'.
+        elif self.data == item:
+            return self.left_count
+        # If the item is smaller than the current node's data, find its rank in the left subtree.
+        elif self.data > item:
+            if self.left:
+                return self.left.get_rank(item)
+            return 0
+        # If the item is greater than the current node's data, calculate its rank considering the left subtree and the current node.
+        else:
+            right_rank = 0 if not self.right else self.right.get_rank(item)
+            return self.left_count + self.count + right_rank
 
-  def get_rank(self, item):
-    if self.data is None:
-      return 0
-    elif self.data < item:
-      if self.right:
-        return self.count + self.left_count + self.right.get_rank(item)
-      else:
-        return self.count + self.left_count
-    elif self.data > item:
-      if self.left:
-        return self.left.get_rank(item)
-      else:
-        return 0
-    else:
-      return self.left_count
+# The rest of your code, including the test cases, can remain unchanged.
+
 
 import unittest
 
