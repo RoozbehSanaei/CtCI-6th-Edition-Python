@@ -6,6 +6,13 @@ structure only supports positive integers.) Given a Listy which contains sorted,
 find the index at which an element x occurs. If x occurs multiple times, you may return any index.
 '''
 
+'''
+Exponential Backoff in sorted_nosize_search: 
+    This part aims to determine a suitable range where the desired number (num) may exist in the sorted array (listy). 
+    It starts from the beginning of the array and exponentially jumps indices until it either finds a number larger than num 
+    or hits an IndexError, indicating the end of the array. This step sets the stage for a more focused search.
+'''
+
 def sorted_nosize_search(listy, num):
     # Adapted to work with a Python sorted
     # array and handle the index error exception
