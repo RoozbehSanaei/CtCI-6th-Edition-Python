@@ -1,5 +1,8 @@
 import unittest
 
+'''
+Write a function to swap a number in place (that is, without temporary variables). 
+'''
 
 def swap_numbers_diff(a, b):
     a = b - a
