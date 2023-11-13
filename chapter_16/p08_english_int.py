@@ -1,3 +1,9 @@
+
+'''
+English Int: Given any integer, print an English phrase that describes the integer (e.g., "One Thou-
+sand, Two Hundred Thirty Four").
+'''
+
 ones = [
     "One",
     "Two",
@@ -33,6 +39,12 @@ twos = {
 
 threes = ["", "Thousand", "Million", "Billion"]
 
+
+'''
+    Numbers between 1 and 19 are converted directly using a list (ones).
+    For numbers between 20 and 99, it converts the tens and ones places separately, using two lists (ones for the ones place, twos for the tens place).
+    For numbers 100 or greater, it adds the word for the hundreds place followed by "Hundred", and then adds the words for the tens and ones places.
+'''
 
 def get_chunks(n):
     result = []
