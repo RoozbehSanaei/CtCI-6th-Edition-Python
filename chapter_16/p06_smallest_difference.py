@@ -1,5 +1,11 @@
 import sys
 
+'''
+Smallest Difference: Given two arrays of integers, compute the pair of values (one value in each
+array) with the smallest (non-negative) difference. Return the difference.
+'''
+
+
 # Function to sort the arrays in O(nlog(n))
 def merge_sort(arr):
     # Function to recursively divide the array into smaller parts
