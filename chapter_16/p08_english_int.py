@@ -62,6 +62,11 @@ def get_chunks(n):
 
     return result
 
+'''
+This function works by breaking down the integer n into chunks of three digits (like processing 123456 as 456 (hundreds) and then 123 (thousands)). 
+It repeatedly calls get_chunks to convert each chunk into words, and adds words like "thousand", "million", etc., 
+as needed (presumably stored in the threes list). The final result is a string that represents the entire number in words.
+'''
 
 def get_in_words(n):
     if n == 0:
