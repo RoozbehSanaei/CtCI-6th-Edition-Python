@@ -6,19 +6,17 @@ def urlify_algo(string, length):
     """replace spaces with %20 and removes trailing spaces"""
     # convert to list because Python strings are immutable
     char_list = list(string)
-    new_index = len(char_list)
+    char_list2 = []
 
-    for i in reversed(range(length)):
+    for i in range(length):
         if char_list[i] == " ":
             # Replace spaces
-            char_list[new_index - 3 : new_index] = "%20"
-            new_index -= 3
+            char_list2.extend(["%","2","0"])
         else:
             # Move characters
-            char_list[new_index - 1] = char_list[i]
-            new_index -= 1
+            char_list2.append(char_list[i])                
     # convert back to string
-    return "".join(char_list[new_index:])
+    return "".join(char_list2)
 
 
 def urlify_pythonic(text, length):
@@ -31,9 +29,9 @@ class TestUrlify(unittest.TestCase):
 
     def test_urlify(self):
         test_cases = [
+            (" a b    ", 4, "%20a%20b"),
             ("much ado about nothing      ", 22, "much%20ado%20about%20nothing"),
             ("Mr John Smith       ", 13, "Mr%20John%20Smith"),
-            (" a b    ", 4, "%20a%20b"),
             (" a b       ", 5, "%20a%20b%20"),
         ]
 

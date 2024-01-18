@@ -34,8 +34,17 @@ def is_unique_bit_vector(string):
     checker = 0
     for c in string:
         val = ord(c)
+        '''
+        Checks if the bit at the ASCII value's position in checker is already set. 
+        This is done by shifting 1 left by the ASCII value (val) and performing a bitwise AND with checker. 
+        If the result is non-zero, it indicates the character has appeared before, so the function returns False.
+        '''
         if (checker & (1 << val)) > 0:
             return False
+        '''
+        Explanation: Sets the bit in checker corresponding to the ASCII value of the character. 
+        This is done by shifting 1 left by the ASCII value and performing a bitwise OR with checker.
+        '''
         checker |= 1 << val
     return True
 
