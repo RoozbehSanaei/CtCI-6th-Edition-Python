@@ -2,6 +2,18 @@
 import unittest
 from copy import deepcopy
 
+'''
+The rotate_matrix function rotates a given matrix 90 degrees clockwise. It does this by moving elements in layers, starting from the outermost layer and moving inward. For each layer, it performs a four-way swap:
+
+    Saves the top elements.
+    Moves the left elements to the top.
+    Moves the bottom elements to the left.
+    Moves the right elements to the bottom.
+    Places the saved top elements to the right.
+
+This process is repeated for each layer of the matrix until all layers have been rotated. The function then returns the rotated matrix.
+'''
+
 
 def rotate_matrix(matrix):
     """rotates a matrix 90 degrees clockwise"""
@@ -24,6 +36,18 @@ def rotate_matrix(matrix):
             # top -> right
             matrix[i][-layer - 1] = top
     return matrix
+
+'''
+The rotate_matrix_double_swap function rotates a given matrix by 90 degrees clockwise. It does this in two main steps:
+
+Transpose the matrix: This is done by swapping elements across the diagonal. For each pair of elements matrix[i][j] and matrix[j][i] where i < j, the function swaps their positions.
+
+Swap columns: For each row, the function swaps elements from the start and end of the row, moving towards the center. This effectively reverses each row.
+
+These two steps combined result in a 90-degree clockwise rotation of the matrix. The function returns the rotated matrix.
+
+
+'''
 
 
 def rotate_matrix_double_swap(matrix):

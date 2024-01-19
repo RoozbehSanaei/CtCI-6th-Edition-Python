@@ -1,6 +1,17 @@
 import time
 import unittest
 
+'''
+The compress_string function compresses a given string by counting consecutive occurrences of each character and forming a new string that consists of each character followed by its count.
+ This is achieved by iterating over the string, keeping track of the count of repeated characters, and updating the compressed version accordingly. 
+
+The last character and its count are appended to compressed. 
+This is necessary because the loop's condition only checks for changes between consecutive characters,
+so the last sequence is not handled within the loop.
+The function then returns the shorter of the original string and the compressed string. 
+This is achieved by joining the compressed list into a string and using min with key=len to compare the lengths.
+'''
+
 
 def compress_string(string):
     compressed = []

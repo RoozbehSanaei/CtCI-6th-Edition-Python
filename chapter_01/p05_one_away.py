@@ -14,6 +14,13 @@ def are_one_edit_different(s1, s2):
     return False
 
 
+'''
+The function one_edit_replace checks if two strings, s1 and s2, differ by exactly one character. 
+It iterates through the characters of both strings simultaneously using zip(s1, s2). 
+If it finds characters that do not match (c1 != c2), it checks whether a mismatch has already been found (if edited). 
+If a mismatch was previously found (edited is True), the function returns False, indicating more than one difference. 
+If it's the first mismatch, edited is set to True. The function returns True if there's exactly one mismatch.
+'''
 def one_edit_replace(s1, s2):
     edited = False
     for c1, c2 in zip(s1, s2):
@@ -23,6 +30,15 @@ def one_edit_replace(s1, s2):
             edited = True
     return True
 
+'''
+The function one_edit_insert checks whether you can convert one string (s1) into another (s2) by making a single insertion. 
+It uses two pointers, i and j, to traverse s1 and s2, respectively.
+
+When s1[i] and s2[j] are not equal, it checks if a difference has already been found (if edited). If a difference was previously encountered, the function returns False, as more than one edit would be required. If this is the first difference, edited is set to True, and only the pointer j for s2 is incremented, indicating an insertion.
+If s1[i] and s2[j] are equal, both pointers are incremented.
+
+The loop continues while both pointers are within the bounds of their respective strings. The function returns True if the strings can be made equal with at most one insertion.
+'''
 
 def one_edit_insert(s1, s2):
     edited = False

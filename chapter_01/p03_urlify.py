@@ -31,8 +31,8 @@ class TestUrlify(unittest.TestCase):
 
     def test_urlify(self):
         test_cases = [
-            ("much ado about nothing      ", 22, "much%20ado%20about%20nothing"),
             ("Mr John Smith       ", 13, "Mr%20John%20Smith"),
+            ("much ado about nothing      ", 22, "much%20ado%20about%20nothing"),
             (" a b    ", 4, "%20a%20b"),
             (" a b       ", 5, "%20a%20b%20"),
         ]

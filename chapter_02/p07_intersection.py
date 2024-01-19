@@ -1,6 +1,6 @@
 from chapter_02.linked_list import LinkedList
 
-
+'''
 # Check if the tail nodes of list1 and list2 are the same.
     # If they are not, then the lists do not intersect.
     if list1.tail is not list2.tail:
@@ -25,6 +25,7 @@ from chapter_02.linked_list import LinkedList
     while shorter_node is not longer_node:
         shorter_node = shorter_node.next
         longer_node = longer_node.next
+'''
 
 def test_linked_list_intersection():
     shared = LinkedList()
