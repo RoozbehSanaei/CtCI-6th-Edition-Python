@@ -24,6 +24,18 @@ If you pop an 8 from the main stack, self.minvals remains [5, 3, 2] because 8 is
 If you pop a 2 from the main stack, self.minvals becomes [5, 3], reflecting that the new minimum is 3.
 '''
 
+'''
+The MinStack class extends a basic stack to efficiently track the minimum element. It uses an auxiliary stack to keep track of minimum values:
+
+    Initialization: Inherits from a base Stack class and initializes an auxiliary stack (self.minvals) for storing minimum values.
+
+    Push Operation: Adds a new element to the stack. If the element is smaller than or equal to the current minimum, it's also pushed onto the minvals stack.
+
+    Pop Operation: Removes the top element from the stack. If this element is the current minimum, it's also removed from the minvals stack.
+
+    Minimum Value Retrieval: Provides the current minimum element by peeking at the top of the minvals stack.
+'''
+
 class MinStack(Stack):
     def __init__(self):
         super().__init__()

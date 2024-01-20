@@ -1,7 +1,9 @@
 from chapter_02.linked_list import LinkedList
 
 '''
-Once the leader reaches the end of the linked list, the follower will be pointing at the kth to last node because it started moving only after the leader had moved k steps.
+The kth_to_last function finds the k-th last element in a linked list. 
+It uses two pointers: leader advances through the list, while follower starts moving after leader is k steps ahead. 
+When leader reaches the end, follower is at the k-th last element. The function then returns this element.
 '''
 
 def kth_to_last(ll, k):
@@ -16,10 +18,18 @@ def kth_to_last(ll, k):
     return follower
 
 '''
-The function uses recursion to traverse to the end of the linked list. 
-As it backtracks from the end, it counts the nodes in reverse order. When the count matches k, 
-the current node is the kth-to-last node, which the function then returns.
+The kth_last_recursive function finds the k-th last element in a linked list using recursion:
+
+    Initialization: It sets up a counter and starts from the head of the list.
+
+    Helper Function: This recursive function traverses the list. When it reaches the end (head is None), it starts incrementing counter on the way back up the recursion.
+
+    Count and Identify: As the recursion unwinds, when counter matches k, the function identifies the k-th last element and returns it.
+
+    Result: The main function initiates this process with helper(head, k) and returns the k-th last element found. The approach uses O(N) space due to recursion.
 '''
+
+
 
 # O(N) space
 def kth_last_recursive(ll, k):

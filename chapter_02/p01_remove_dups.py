@@ -2,6 +2,14 @@ import time
 
 from chapter_02.linked_list import LinkedList
 
+'''
+The remove_dups function removes duplicate values from a linked list. 
+It iterates through the list, using a set to track seen values. 
+If a node's value is in the set (a duplicate), it's removed from the list by adjusting the next pointer of the previous node. Otherwise, 
+the value is added to the set and the iteration continues. The list's tail is updated at the end, and the modified list is returned with all duplicates removed.
+
+'''
+
 
 def remove_dups(ll):
     current = ll.head
@@ -18,10 +26,18 @@ def remove_dups(ll):
     ll.tail = previous
     return ll
 
+
 '''
-Does not use any additional data structures like a set. Instead, for each node, 
-it uses a runner approach where it checks all the subsequent nodes for duplicates of the current node's value and removes them
+The remove_dups_followup function removes duplicates from a linked list (ll) using two pointers, 
+current and runner, without extra space. It iterates through the list with current, and for each node, 
+uses runner to check and remove any subsequent nodes with the same value. After processing all nodes,
+ it updates the tail of the list to the last unique node and returns the modified list with duplicates removed. 
+ This method is space-efficient but has a higher time complexity due to nested loops.
+
 '''
+
+
+
 def remove_dups_followup(ll):
     runner = current = ll.head
     while current:

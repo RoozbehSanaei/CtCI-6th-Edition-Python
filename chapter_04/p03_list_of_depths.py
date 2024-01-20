@@ -7,7 +7,22 @@ class BinaryNode:
         self.left = left
         self.right = right
 '''
-Uses a deque for Breadth-First Search (BFS) to traverse the tree level by level. Keeps track of nodes at each level with a dictionary.
+The create_node_list_by_depth function generates a dictionary mapping each depth level of a binary tree to a linked list of nodes at that level:
+
+    Initialization: 
+        It initializes a dictionary levels to hold the linked lists and a queue q for breadth-first traversal. The root node, along with its depth level (0), is added to the queue.
+
+    Breadth-First Traversal: 
+        The function enters a loop to process each node in the queue. For each node, it dequeues the node along with its level.
+
+    Level-wise LinkedLists: 
+        If the level doesn't exist in levels, a new linked list is created for that level. The node is then added to the linked list corresponding to its level.
+
+    Enqueue Children: 
+        The function enqueues the left and right children of the current node (if they exist) into the queue with an incremented level value.
+
+    Return Levels: 
+        Once the queue is empty, the function returns the levels dictionary, which contains the nodes of the tree organized by their depth levels. Each level is represented by a linked list of the nodes at that level.
 '''
 
 def create_node_list_by_depth(tree_root):
@@ -26,15 +41,39 @@ def create_node_list_by_depth(tree_root):
     return levels
 
 '''
-Uses a list to keep linked lists for each level. Iterates through each level, adding child nodes to the linked list for the next level.
-'''
 
-def create_node_list_by_depth_b(tpppree):
+The function create_node_list_by_depth_b(tree) is designed to take a binary tree and create a list of linked lists, where each linked list contains all the nodes at a specific depth level in the tre
+
+    Empty Tree Check: 
+        If the tree is empty (None), return an empty list.
+
+    Initialize Variables: 
+        Set curr to the tree root, create a result list with a linked list containing the root, and set level to 0.
+
+    Loop Through Levels: 
+        Use a while loop to process each tree level until no more nodes are left at the current level.
+
+    Add New Level: 
+        Append an empty linked list to result for the next level.
+
+    Process Current Level Nodes: 
+        Iterate over nodes in the current level's linked list, adding their left and right children to the next level's linked list.
+
+    Increment Level: 
+        Increase level by 1 to move to the next level.
+
+    Return Result: 
+        After processing all levels, return the result list, which contains a linked list for each tree level.'''
+
+
+def create_node_list_by_depth_b(tree):
     if not tree:
         return []
+
     curr = tree
     result = [LinkedList([curr])]
     level = 0
+
     while result[level]:
         result.append(LinkedList())
         for linked_list_node in result[level]:

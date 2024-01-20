@@ -5,39 +5,48 @@ from chapter_03.stack import Stack
 # Implement a MyQueue class which implements a queue using two stacks.
 
 class MyQueue:
+    # Custom queue class implemented using two stacks
     def __init__(self):
-        self.new_stack = Stack()
-        self.old_stack = Stack()
+        self.new_stack = Stack()  # Stack for enqueueing new elements
+        self.old_stack = Stack()  # Stack for dequeueing elements
 
-
-    '''
-    The method effectively reverses the order of elements from new_stack and puts them into old_stack, making the earliest enqueued element available at the top of old_stack for easy dequeueing.
-    '''
+    # Internal method to shift elements from new_stack to old_stack
     def _shift_stacks(self):
+        # Move elements only if old_stack is empty
         if self.old_stack.is_empty():
             while not self.new_stack.is_empty():
+                # Move each element from new_stack to old_stack
                 self.old_stack.push(self.new_stack.pop())
 
+    # Add an element to the queue
     def add(self, value):
+        # Enqueue operation is done on new_stack
         return self.new_stack.push(value)
 
+    # Return the element at the front of the queue without removing it
     def peek(self):
         if self.is_empty():
             return False
-        self._shift_stacks()
-        return self.old_stack.peek()
+        self._shift_stacks()  # Ensure the oldest element is on top of old_stack
+        return self.old_stack.peek()  # Return the top element of old_stack
 
+    # Remove and return the element at the front of the queue
     def remove(self):
         if self.is_empty():
             return False
-        self._shift_stacks()
-        return self.old_stack.pop()
+        self._shift_stacks()  # Ensure the oldest element is on top of old_stack
+        return self.old_stack.pop()  # Dequeue operation is done on old_stack
 
+    # Check if the queue is empty
     def is_empty(self):
+        # The queue is empty if both stacks are empty
         return len(self) == 0
 
+    # Get the total number of elements in the queue
     def __len__(self):
+        # Total size is the sum of sizes of both stacks
         return len(self.new_stack) + len(self.old_stack)
+
 
 
 class Tests(unittest.TestCase):

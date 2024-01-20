@@ -13,19 +13,30 @@ class SortedStack(Stack):
         super().__init__()
         self.temp_stack = Stack()
 
+
+    '''
+    The push method in the code is designed to maintain a sorted order in a stack when inserting a new item. 
+
+        Insert if Stack is Empty or Item is Smaller: If the stack is empty or the new item is smaller than the top item of the stack, it's directly pushed onto the stack.
+
+        Reordering for Larger Items:
+            If the new item is larger than the top item, the method enters a reordering phase.
+            Elements smaller than the new item are temporarily moved to a temp_stack until an appropriate position for the new item is found in the stack.
+
+        Insert New Item: The new item is then pushed onto the stack.
+
+        Restore Elements: Finally, elements from the temp_stack are moved back to the main stack, maintaining the sorted order.
+
+    '''
     def push(self, item):
-        # If the stack is empty or the item is smaller than the top item, simply push it
         if self.is_empty() or item < self.peek():
             super().push(item)
         else:
-            # Move items larger than 'item' from the main stack to the temporary stack
             while self.peek() is not None and item > self.peek():
                 self.temp_stack.push(self.pop())
 
-            # Push the new item to the main stack
             super().push(item)
 
-            # Move the items back from the temporary stack to the main stack
             while not self.temp_stack.is_empty():
                 super().push(self.temp_stack.pop())
 

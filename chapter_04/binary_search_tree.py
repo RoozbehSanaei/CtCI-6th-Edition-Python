@@ -9,16 +9,24 @@ class Node:
 class BinarySearchTree:
     def __init__(self):
         self.root = None
-'''
-a Python method for inserting a new node with a given key into a binary search tree (BST). Here's a quick rundown of what it does:
 
-First, it creates a new node with the given key.
-If the tree is empty (self.root is None), it sets the root of the tree to the new node.
-If the tree isn't empty, it starts from the root and traverses the tree :
-    If key is smaller than the current node's key, it goes left.
-    If key is greater or equal, it goes right.
-    When it finds a None spot (either current.left or current.right), it inserts the new node there and sets the parent link.
-'''
+    '''
+    The insert method in the code is used to insert a new node with a given key into a binary search tree (BST). Here's a brief overview:
+
+        A new node is created with the specified key.
+
+         If the tree is empty (no root), the new node becomes the root.
+
+        The tree is traversed, starting from the root, to find the right position for the new node:
+            If the key of the new node is less than the current node's key, the algorithm moves to the left child.
+            If the key is greater, it moves to the right child.
+
+            Insertion: 
+                The new node is inserted when an empty spot (where a child should be but is None) is found.
+                The parent of the new node is set to the current node where it's inserted.
+
+    This method maintains the BST property: left children are less than their parent node, and right children are greater or equal.
+    '''
     def insert(self, key):
         new = Node(key)
         if self.root is None:
@@ -41,6 +49,24 @@ If the tree isn't empty, it starts from the root and traverses the tree :
                 current = current.right
 
 
+
+    '''
+
+    The get_node method searches for and returns a node with a specified key in a binary search tree (BST). 
+
+    Start from Root: 
+        The search begins at the root of the BST.
+
+    Traverse Tree: It iteratively traverses the tree:
+        If the key matches the current node's key, that node is returned.
+        If the key is less than the current node's key, it moves to the left child.
+        If the key is greater, it moves to the right child.
+
+    Key Not Found: If the node with the specified key is not found in the tree, an exception is raised indicating no such value exists in the tree.
+    '''
+
+
+    
 
     def get_node(self, key):
         current = self.root

@@ -12,6 +12,15 @@ Output:
 3 -> 1 -> 2 -> 10 -> 5 -> 5 -> 8
 '''
 
+
+'''
+The partition function rearranges a linked list so that all elements smaller than a given value x are moved before elements greater than or equal to x. 
+It goes through each element of the list (current), 
+and if an element's value is less than x, it moves it to the front of the list. 
+If it's greater or equal, it moves it to the end. After the process, 
+it ensures the last element's next is None to correctly terminate the list, and then returns the modified list.
+'''
+
 def partition(ll, x):
     current = ll.tail = ll.head
 
@@ -31,6 +40,13 @@ def partition(ll, x):
         ll.tail.next = None
     return ll
 
+'''
+The lr_partition function splits a given linked list into two separate lists: 
+one (left) containing elements less than a specified value p, 
+and the other (right) containing elements greater than or equal to p. 
+It then combines these two lists, with all the left elements first, 
+followed by the right elements, and returns this combined list.
+'''
 
 def lr_partition(_ll: LinkedList, p: int) -> LinkedList:
     """

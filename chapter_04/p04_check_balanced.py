@@ -5,9 +5,15 @@ class BinaryNode:
         self.right = None
 
 
-# Version 2:
-# Traverse the tree and track the largest and smallest depth of each leaf node.
-# Then compare the largest and smallest depth.
+'''
+The is_balanced_v2(node) function checks if a binary tree is balanced.
+ It does so by finding the minimum and maximum depths of its leaf nodes. 
+ Using a breadth-first search, it traverses the tree, updating these depths as it encounters leaf nodes
+ . If the difference between the maximum and minimum depths is less than 2, the tree is balanced, and the function returns True; otherwise, it returns False.
+
+
+'''
+
 def is_balanced_v2(node):
     min_depth = 10**100
     max_depth = -(10**100)
@@ -32,6 +38,13 @@ def is_balanced_v2(node):
 
     return max_depth - min_depth < 2
 
+'''
+The find_max_depth function recursively calculates the maximum depth of a binary tree. 
+It starts from a given node and a level (defaulted to 0). The function increases the level as it traverses down the tree. 
+If a node is None, it returns the current level, indicating the end of a path. If a node has only one child (left or right), it continues down that path. 
+If a node has both children, it explores both paths and returns the maximum depth found. This way, it finds the deepest level reached in the tree.
+'''
+
 
 def find_max_depth(node, level=0):
     if node is None:
@@ -43,6 +56,12 @@ def find_max_depth(node, level=0):
     return max(
         find_max_depth(node.left, level + 1), find_max_depth(node.right, level + 1)
     )
+
+'''
+The find_max_depth function calculates the maximum depth of a binary tree, seeking the longest path to a leaf. 
+The find_min_depth function, on the other hand, determines the minimum depth, finding the shortest path to a leaf. 
+Both use similar traversal methods, but find_max_depth uses max to choose the deeper path, while find_min_depth uses min to find the shallower one.
+'''
 
 
 def find_min_depth(node, level=0):

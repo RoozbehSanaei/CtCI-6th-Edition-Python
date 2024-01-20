@@ -19,56 +19,54 @@ above: Points to the node that is one position above the current node in the sta
 below: Points to the node that is one position below the current node in the stack. If the node is at the bottom of the stack, below would be None.
 '''
 
+
+
 class Node:
+    # Node class for representing each element in a stack
     def __init__(self, value):
-        self.value = value
-        self.above = None
-        self.below = None
+        self.value = value  # Value of the node
+        self.above = None   # Pointer to the node above
+        self.below = None   # Pointer to the node below
 
 
 class Stack:
+    # Stack class with a set capacity
     def __init__(self, capacity):
-        self.capacity = capacity
-        self.size = 0
-        self.top = None
-        self.bottom = None
+        self.capacity = capacity  # Maximum number of items in the stack
+        self.size = 0             # Current number of items in the stack
+        self.top = None           # Top item of the stack
+        self.bottom = None        # Bottom item of the stack
 
+    # Check if stack is full
     def is_full(self):
         return self.size == self.capacity
 
+    # Check if stack is empty
     def is_empty(self):
         return self.size == 0
 
-
-    '''
-    The join method links two nodes together within a stack. 
-    It sets the above pointer of the "below" node to point to the "above" node,
-    and the below pointer of the "above" node to point to the "below" node.
-    '''
-
+    # Join two nodes within a stack
     def join(self, above, below):
+        # Set the pointers between the nodes
         if below:
             below.above = above
         if above:
             above.below = below
 
+    # Add a new item to the top of the stack
     def push(self, v):
         if self.size >= self.capacity:
             return False
         self.size += 1
         n = Node(v)
-        
-        '''
-        If you're adding the first element to an empty stack, 
-        that element becomes both the top and the bottom of the stack, so self.bottom is set to n.
-        '''
-        
+
         if self.size == 1:
-            self.bottom = n
+            self.bottom = n  # If stack was empty, new node is both top and bottom
         self.join(n, self.top)
         self.top = n
         return True
 
+    # Remove and return the top item from the stack
     def pop(self):
         if not self.top:
             return None
@@ -77,6 +75,7 @@ class Stack:
         self.size -= 1
         return t.value
 
+    # Remove and return the bottom item from the stack
     def remove_bottom(self):
         b = self.bottom
         self.bottom = self.bottom.above
@@ -87,19 +86,23 @@ class Stack:
 
 
 class SetOfStacks:
+    # Class to manage multiple stacks, each with a set capacity
     def __init__(self, capacity):
-        self.capacity = capacity
-        self.stacks = []
+        self.capacity = capacity  # Capacity of each individual stack
+        self.stacks = []          # List to hold all the stacks
 
+    # Get the last stack in the list
     def get_last_stack(self):
         if not self.stacks:
             return None
         return self.stacks[-1]
 
+        # Check if the set of stacks is empty
     def is_empty(self):
         last = self.get_last_stack()
         return not last or last.is_empty()
 
+    # Add an item to the last stack or to a new stack if the last is full
     def push(self, v):
         last = self.get_last_stack()
         if last and not last.is_full():
@@ -109,6 +112,7 @@ class SetOfStacks:
             stack.push(v)
             self.stacks.append(stack)
 
+    # Remove and return the top item from the last stack
     def pop(self):
         last = self.get_last_stack()
         if not last:
@@ -118,25 +122,31 @@ class SetOfStacks:
             del self.stacks[-1]
         return v
 
+    # Remove and return an item from a specific stack
     def pop_at(self, index):
         return self.left_shift(index, True)
+    
+    '''
+    The left_shift method in the SetOfStacks class is used to maintain balance in the stacks after an element is removed from a stack that is not the last one. It works by:
 
-'''
-The left_shift method is used for balancing stacks after a pop_at operation. 
-It removes an item from a specific stack at the given index and then shifts items from the next stack to fill in the gap, if needed.
-'''
+    Removing either the top or bottom element from the specified stack, depending on the remove_top parameter.
+    If removing this element empties the stack, the stack is deleted from the set.
+    If there's a next stack, the method recursively shifts the bottom element from that next stack to the top of the current stack.
+
+    This process ensures all stacks remain fully utilized, except possibly the last one, after a pop_at operation.
+    '''
+
+    # Balance stacks after a pop_at operation
     def left_shift(self, index, remove_top):
         stack = self.stacks[index]
         removed_item = stack.pop() if remove_top else stack.remove_bottom()
         if stack.is_empty():
             del self.stacks[index]
-# Check if there's another stack to the right of the current one.
         elif len(self.stacks) > index + 1:
-            # Remove the bottom item from the next stack to the right.
             v = self.left_shift(index + 1, False)
-            # Push that removed item to the top of the current stack.
             stack.push(v)
         return removed_item
+
 
 class Tests(unittest.TestCase):
     def test_stacks(self):

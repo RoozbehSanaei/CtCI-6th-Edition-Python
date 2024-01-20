@@ -2,6 +2,20 @@
 import unittest
 from copy import deepcopy
 
+'''
+The zero_matrix function sets entire rows and columns to zero in a given matrix if any element in those rows or columns is zero. It operates in two main steps:
+
+    Identifying Rows and Columns with Zeros:
+        It iterates through each element in the matrix.
+        If an element is zero, it adds its row and column indices to the rows and cols sets, respectively.
+
+    Setting Rows and Columns to Zero:
+        It iterates again through each element in the matrix.
+        If the current element's row or column index is in the rows or cols sets, it sets that element to zero.
+
+The function then returns the modified matrix, where all rows and columns that contained at least one zero element have been entirely set to zero.
+'''
+
 
 def zero_matrix(matrix):
     m = len(matrix)
@@ -21,6 +35,15 @@ def zero_matrix(matrix):
                 matrix[x][y] = 0
 
     return matrix
+
+'''
+The zero_matrix_pythonic function sets entire rows and columns to zero in a given matrix if any element in those rows or columns is zero. This Pythonic approach involves:
+
+    Replacing all zero elements in the matrix with "X". Using "X" instead of zeros avoids  changing rows or columns that didn't originally contain zeros.
+    Identifying rows containing "X" and setting all elements in these rows to zero, while recording the column indices of "X".
+    Setting all elements in the identified columns to zero.
+    Returning the modified matrix with specified rows and columns set to zero.
+'''
 
 
 def zero_matrix_pythonic(matrix):

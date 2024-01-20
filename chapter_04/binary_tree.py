@@ -12,18 +12,22 @@ class BinaryTree:
     def __init__(self):
         self.root = None
 
-'''
-It creates a new node with the given key using a class specified in self.NodeCls.
-If the parent parameter is None, it checks if the tree is empty (self.root is None).
-If it is, the new node becomes the root.
-If it's not, an exception is raised because the tree already has a root.
-If parent is provided, it checks the left and right children.
-If the left child is None, it inserts the new node there.
-If the right child is None, it inserts the new node there.
-If both left and right children exist, an exception is raised because a node can't have more than two children in a binary tree.
-'''
+    '''
+    The insert method in the code adds a new node with a given key to a binary tree:
 
-    
+    Create New Node: A new node is created.
+
+        Root Insertion: 
+            If parent is None, the method tries to insert the new node as the root. If the root already exists, it raises an exception.
+
+        Child Insertion: 
+            If parent is not None, the new node is inserted as the left or right child, depending on which position is available. If both positions are filled, it raises an exception.
+
+        Return: 
+            The new node is returned after being inserted.
+    '''
+
+        
     def insert(self, key, parent):
         new = self.NodeCls(key)
         if parent is None:

@@ -16,6 +16,16 @@ lnput:(6 -> 1 -> 7) + (2 -> 9 -> 5).That is,617 + 295.
 Output: 9 -> 1 -> 2. That is, 912.
 '''
 
+'''
+The sum_lists function adds two numbers represented as linked lists (ll_a and ll_b), 
+with each node containing a single digit and the least significant digit at the head of the list. 
+It iterates through both lists, summing corresponding digits. For each sum, it calculates the "digit part," 
+which is the sum modulo 10 (the rightmost digit), and the "carry part," which is the sum divided by 10 (the carry-over value for the next pair of digits). 
+The "digit part" is added to a new list, while the "carry part" is carried over to the next iteration.
+After processing all digits, any remaining carry is added to the list. The function then returns this new list, representing the total sum.
+'''
+
+
 def sum_lists(ll_a, ll_b):
     n1, n2 = ll_a.head, ll_b.head
     ll = NumericLinkedList()
@@ -37,6 +47,19 @@ def sum_lists(ll_a, ll_b):
 
     return ll
 
+'''
+The sum_lists_recursive function adds two numbers represented by linked lists and returns the sum as a new linked list, using a recursive approach:
+
+    Base Case: When both lists are fully traversed, any remaining carry is added to the sum list, and the sum list is returned.
+
+    Recursive Summing and Carrying:
+        If one list is longer, the function adds the value from the remaining list and any carry to the sum list.
+        If both lists have nodes, their values and any carry are added.
+        In both scenarios, the sum's digit part is stored in the sum list, and any excess is carried over.
+        The process continues recursively with the next nodes.
+
+    Returning the Result: The recursion continues until all nodes in both lists are processed, resulting in a sum list representing the total sum.
+'''
 
 def sum_lists_recursive(ll_a, ll_b) -> "NumericLinkedList":
     def sum_lists_helper(ll1_head, ll2_head, remainder, summed_list):

@@ -24,26 +24,32 @@ def is_route(graph, start, end, visited=None):
     for node in graph[start]:
         if node not in visited:
             visited.add(node)
-                '''
-                If the current node is the end node (node == end), it means we've found a route, so the function returns True.
-                If the current node isn't the end node, the function calls itself recursively (is_route(graph, node, end, visited))
-                to explore paths from this new node to the end node. If any of those paths lead to the end node, the function returns True.
-                '''
+            '''
+            If the current node is the end node (node == end), it means we've found a route, so the function returns True.
+            If the current node isn't the end node, the function calls itself recursively (is_route(graph, node, end, visited))
+            to explore paths from this new node to the end node. If any of those paths lead to the end node, the function returns True.
+            '''
             if node == end or is_route(graph, node, end, visited):
                 return True
     return False
 
 
+
 '''
-If start and end are the same, it immediately returns True.
-Initialize an empty set visited to keep track of visited nodes.
-Initialize a queue (deque) and add the start node to it.
-Loop as long as the queue is not empty:
-Dequeue a node and check its adjacent nodes.
-If an adjacent node hasn't been visited and is the end node, return True.
-Otherwise, enqueue the unvisited adjacent nodes for later exploration.
-Mark the current node as visited.
-If the queue becomes empty and the end node hasn't been found, return False.
+The is_route_bfs function determines if there is a path between start and end nodes in a given graph using Breadth-First Search (BFS):
+
+    If start and end are the same, it immediately returns True.
+
+    A visited set and a queue are initialized. start is added to the queue.
+
+    BFS Loop:
+        While the queue is not empty, it repeatedly dequeues a node.
+        It iterates over the node's adjacent nodes. If an adjacent node hasn't been visited, it checks if this node is the end node. If so, returns True.
+        If not the end node, the adjacent node is added to the queue for further exploration.
+
+    Mark Visited: After exploring a node's adjacencies, it's added to visited to avoid revisiting.
+
+    No Route Found: If the loop finishes without finding the end node, it returns False, indicating no path exists between start and end.
 '''
 
 def is_route_bfs(graph, start, end):
@@ -64,10 +70,26 @@ def is_route_bfs(graph, start, end):
     return False
 
 '''
-The algorhtm performs a simultaneous breadth-first search (BFS) starting from both the start and end nodes. 
-It uses a deque to keep track of which nodes to visit next and two sets to keep track of the nodes visited from each end. 
-The algorithm continues to search outwards from both ends until it either finds a node that has been visited from both ends, 
-indicating a bidirectional route, or exhausts all nodes to visit, indicating no such route exists.
+The is_route_bidirectional function checks for a path between start and end nodes in a graph using a bidirectional approach:
+
+    Initialization:
+        Starts with start and end nodes in the to_visit queue.
+        Maintains two sets, visited_start and visited_end, to track visited nodes from both directions.
+
+    Bidirectional Search:
+        The function alternates between exploring nodes from start and end.
+        Each dequeued node is checked to see if it's been visited from both directions, indicating a path is found.
+
+    Exploring Neighbors:
+        For each neighbor of the current node:
+            If exploring from start, add unvisited neighbors to visited_start and to_visit.
+            If exploring from end, do the same for visited_end.
+
+    Path Found:
+        If any node is found in both visited_start and visited_end, it means a connecting path exists, so it returns True.
+
+    No Path:
+        If the queue is emptied without overlapping visits, it returns False, indicating no path exists.
 '''
 
 def is_route_bidirectional(graph, start, end):

@@ -16,6 +16,26 @@ Palindromes are commonly encountered in wordplay and puzzles, and they also have
 
 '''
 
+'''
+The is_palindrome function checks if a linked list is a palindrome:
+
+    Initialize Pointers and Stack: 
+        Set both fast and slow pointers to the list's head and initialize a stack.
+
+    Identify the Middle: 
+        Move slow one node and fast two nodes per iteration, pushing slow's values onto the stack, until fast reaches the end.
+
+    Adjust for Odd-Length Lists: 
+        If fast is not None (odd number of elements), move slow forward to skip the middle element.
+
+    Compare Second Half: 
+        Traverse the second half while popping from the stack; return False if any value doesn't match.
+
+    Check for Palindrome: 
+        If all elements match, return True; otherwise, False.
+
+'''
+
 def is_palindrome(ll):
     fast = slow = ll.head
     stack = []
@@ -38,31 +58,29 @@ def is_palindrome(ll):
 
     return True
 
-'''
-1. Finding the List Center:
-  - 'slow' and 'fast' pointers are initialized at the head of the linked list.
-  - The fast pointer moves twice as fast as the slow pointer using the "runner" or "tortoise and hare" technique.
-  - By the time the fast pointer reaches the end, the slow pointer will be at the middle of the list.
-
-2. Unlink Left and Right Halves:
-  - After finding the middle node, 'right_head' points to the first node of the second half.
-  - The two halves are unlinked by setting 'slow.next_node' to None.
-
-3. Reverse the Right Half:
-  - The function reverses the right half of the list, making two separate half-lists.
-
-4. Iterate and Compare:
-  - Using 'left' and 'right' pointers, the function iterates over the two half-lists from the outside inward.
-  - It compares their values to check for a palindrome.
-
-5. Undo State Changes:
-  - The function reverses the right half-list back to its original state.
-  - It then relinks it to the left half-list.
-
-6. Return the Result:
-  - Finally, the function returns True if the linked list is a palindrome, otherwise False.
 
 '''
+The is_palindrome_constant_space function checks if a linked list is a palindrome using constant space (O(1)):
+
+    Find Center: 
+        Uses a slow and fast pointer technique to find the middle of the list.
+
+    Split List: 
+        Divides the list into two halves at the middle.
+
+    Reverse Second Half: 
+        Reverses the right half of the list.
+
+    Compare Halves: 
+        Compares nodes from the outside towards the center, checking if corresponding values are equal.
+
+    Restore List: 
+        Reverses the second half back to its original order and reconnects the list.
+
+    Return Result: 
+        Concludes if the list is a palindrome based on the comparison and returns the result.
+'''
+
 def is_palindrome_constant_space(ll):
     """
     Constant(O(1)) space solution
@@ -117,13 +135,6 @@ def reverse(node):
     return previous_node
 
 
-def is_palindrome_recursive(ll):
-    def get_len(node):
-        if not node:
-            return 0
-        else:
-            return 1 + get_len(node.next)
-
 '''
 recursive_transverse(node, length): This is the core of the function and it actually performs the palindrome check.
 
@@ -139,6 +150,15 @@ recursive_transverse(node, length): This is the core of the function and it actu
 4. if node.value == fwd_node.value:
    - Compares the current node and the symmetric node from the end. If they match, continues; otherwise, returns False.
 '''
+
+
+def is_palindrome_recursive(ll):
+    def get_len(node):
+        if not node:
+            return 0
+        else:
+            return 1 + get_len(node.next)
+
     def recursive_transverse(node, length):
         if not node or length == 0:  # even list
             return True, node
@@ -169,9 +189,9 @@ test_cases = [
 ]
 
 testable_functions = [
-    is_palindrome,
-    is_palindrome_constant_space,
     is_palindrome_recursive,
+    is_palindrome,
+    is_palindrome_constant_space
 ]
 
 

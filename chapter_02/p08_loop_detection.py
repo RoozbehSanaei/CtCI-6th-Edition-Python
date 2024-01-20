@@ -1,13 +1,13 @@
 from chapter_02.linked_list import LinkedList
 
 '''
-fast and slow pointers both start at the head of the linked list (ll.head).
-fast moves two steps at a time, while slow moves one step at a time.
-If there's a loop, the fast pointer will eventually catch up to the slow pointer, and the while loop will break.
-If there's no loop, then fast will reach the end of the list, and the function will return None.
-If a loop is detected, a second while loop is used to find the starting node of the loop in the linked list.
-If a loop is detected, the slow pointer is reset to the head of the linked list. Both slow and fast pointers then move one node at a time until they meet again. 
-When they meet, that node is the starting node of the loop.
+Fast and Slow Pointers: Uses two pointers, fast moving two steps and slow one step, to check for a cycle. If they meet, a loop exists.
+
+No Loop Found: If fast or fast.next is None, the list has no loop, and the function returns None.
+
+Locate Loop Start: Resets slow to the head and moves both slow and fast one step at a time until they meet again, indicating the start of the loop.
+
+Return Loop Start: Returns the node where fast and slow meet, marking the beginning of the loop.
 '''
 
 def loop_detection(ll):

@@ -4,6 +4,25 @@ import pytest
 Describe how you could use a single array to implement three stacks.
 '''
 
+'''
+The MultiStack class creates multiple stacks using a single array. Key features include:
+
+    Initialization: Sets up an array to store stack elements and tracks the size of each stack.
+
+    Push: Adds an element to a specified stack, checking if it's full first.
+
+    Pop: Removes and returns the top element of a specified stack, checking if it's empty first.
+
+    Peek: Returns the top element of a specified stack without removing it.
+
+    is_empty: Checks if a specified stack is empty.
+
+    is_full: Checks if a specified stack is full.
+
+    Helper Methods: Includes methods to calculate the index of the top element in a stack and validate the stack number.
+
+'''
+
 class MultiStack:
     def __init__(self, stack_size, number_of_stacks):
         self.number_of_stacks = number_of_stacks

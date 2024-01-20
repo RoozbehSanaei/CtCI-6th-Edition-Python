@@ -15,13 +15,14 @@ def is_binary_search_tree(tree):
 
 
 '''
-The algorithm uses a recursive approach to traverse the tree and check these properties. It does so by keeping track of the minimum (min_val) and maximum (max_val) allowable values for each node as it traverses down the tree.
+The _is_bst function checks if a binary tree is a binary search tree (BST). It recursively verifies two conditions for each node:
 
-When going left, the max_val is updated to the current node's value.
-When going right, the min_val is updated to the current node's value.
-By doing this, it checks not just local conditions (i.e., comparing a node with its immediate children) but also more global conditions that consider ancestors and descendants, which is crucial for validating a BST.
+    The node's value must be greater than a given minimum (min_val) and less than a given maximum (max_val).
+    These conditions must hold true for both the left and right subtrees.
+
+If a node violates these conditions or if a node is absent (indicating a leaf), the function returns False or True respectively. 
+The function updates min_val and max_val as it traverses down the tree to maintain the BST property: left child values are less than the parent, and right child values are greater.
 '''
-
 
 def _is_bst(node, min_val=None, max_val=None):
     if not node:
