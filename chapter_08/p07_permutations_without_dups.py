@@ -1,37 +1,49 @@
 # Write a method to compute all permutations of a string of unique characters
 
-# Function to generate all permutations of a given string
+
+'''
+    Initialize Permutations List: 
+        Start by creating an empty list where all the permutations will be stored.
+
+    Handle None String: 
+        If the input string is None, the function returns None, as permutations can't be generated for a non-existent string.
+
+    Base Case for Empty String: 
+        If the input string is empty, add an empty space to the permutations list. 
+        This is the base case for the recursion.
+
+    Recursive Case:
+        Extract the first character of the string. This character will be inserted into different positions in the permutations of the remaining string.
+        Get the remainder of the string by removing the first character.
+
+    Generate Permutations of the Remainder: 
+        Call the same function recursively to get all permutations of the remainder of the string.
+
+    Insert the First Character in Each Position:
+        For each permutation of the remainder, insert the first character at every possible position within the permutation. 
+        For instance, if the first character is 'A' and one of the permutations of the remainder is 'BC', you insert 'A' at three positions, resulting in 'ABC', 'BAC', and 'BCA'.
+        Use a helper function to insert the character at the desired position.
+
+    Return All Permutations: 
+        After iterating through all permutations of the remainder and inserting the first character at all possible positions, return the final list of permutations.
+'''
 def get_perms(string):
-    permutations = []  # Initialize an empty list to store the permutations
-    
-    # If the input is None, return None
+    permutations = []
     if string is None:
         return None
-    
-    # Base case: if the string is empty, add a space to the permutations list
     if len(string) == 0:
         permutations.append(" ")
         return permutations
-
-    # Recursive case:
-    first = string[0]  # Get the first character from the string
-    remainder = string[1:]  # Get the string minus its first character
-    
-    # Recursively get all the permutations of the 'remainder' string
+    first = string[0]
+    remainder = string[1:]
     words = get_perms(remainder)
-    
-    # Iterate through each word in the list of 'remainder' permutations
     for word in words:
-        index = 0  # Initialize index to 0
-        # For each character in the word
+        index = 0
         for _ in word:
-            # Insert the 'first' character at the current index position in the 'word'
             s = insert_char_at(word, first, index)
-            # Add this new permutation to our list
             permutations.append(s)
-            index += 1  # Move to the next index
-    
-    return permutations  # Return the final list of permutations
+            index += 1
+    return permutations
 
 def insert_char_at(word, char, i):
     start = word[:i]
@@ -39,37 +51,41 @@ def insert_char_at(word, char, i):
     return start + char + end
 
 
-# approach 2: Building from permutations of all n-1 character substrings
+
+'''
+    Starting the Process:
+        Begin with a function designed to generate permutations of a given string.
+        This function starts by creating an empty list where the permutations will be stored.
+        It then calls a helper function, initially providing it with a blank starting point, the original string, and the empty list for storing permutations.
+
+    Generating Permutations (Helper Function):
+        The helper function is where the permutations are actually created. 
+        It uses a recursive approach, meaning it repeatedly calls itself with different inputs until a certain condition is met.
+        
+        Initially, the function checks if the string to permute is empty. 
+        If it is, this indicates that a complete permutation has been formed, which is then added to the list of permutations.
+        If the string is not empty, the function proceeds to iterate through each character in the string.
+            For each character, the function divides the string into two parts: the part before the current character and the part after.
+            It then takes the current character and adds it to an ongoing combination (which started as blank).
+            The function calls itself again, but now with a new combination (the ongoing combination plus the current character) and a new string to permute (composed of the parts of the string before and after the current character, effectively excluding the current character).
+        This recursive process continues, gradually building up combinations and storing each complete permutation in the list, until all possible permutations are generated.
+
+'''
 def get_perms_2(string):
     result = []
     get_perms_inner_2(" ", string, result)
     return result
 
-
-# Inner function to generate permutations recursively
 def get_perms_inner_2(prefix, remainder, result):
-    # Base case: if the remainder is empty, a permutation is formed.
-    # Append it to the result list.
     if len(remainder) == 0:
         result.append(prefix)
-
-    # Get the length of the remainder string for iteration
     length = len(remainder)
-    
-    # Loop through each character in the remainder string
     for i in range(length):
-        # Slice the string to get the part before the i-th character
         before = remainder[:i]
-        
-        # Slice the string to get the part after the i-th character
         after = remainder[i + 1:]
-        
-        # Extract the i-th character
         c = remainder[i]
-        
-        # Recursive call: Append the i-th character to the prefix and
-        # update the remainder by removing the i-th character.
         get_perms_inner_2(prefix + c, before + after, result)
+
 
 
 

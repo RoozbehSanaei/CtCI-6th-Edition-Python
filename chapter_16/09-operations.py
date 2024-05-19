@@ -6,7 +6,7 @@ def multiply(a, b):
   else:
     s, l = b, a
   product = 0
-  for _ in xrange(abs(s)):
+  for _ in range(abs(s)):
     product += l
   if s < 0:
     return -product
@@ -34,7 +34,10 @@ class Test(unittest.TestCase):
     self.assertEqual(multiply(3, 6), 18)
     self.assertEqual(multiply(7, 11), 77)
     self.assertEqual(multiply(-8, 10), -80)
-  
+    self.assertEqual(multiply(8, -10), -80)
+    self.assertEqual(multiply(-8, -10), 80)
+
+
   def test_divide(self):
     self.assertEqual(divide(3, 6), 0)
     self.assertEqual(divide(30, 6), 5)

@@ -1,15 +1,15 @@
 # Return the pairs with a given sum.
 
 def pairs_with_sum(arr, s):
-  values = set()
-  for elem in arr:
-    values.add(elem)
   pairs = set()
+  remaining_values = set(arr)
   for elem in arr:
-    if (s - elem) in values:
-      values.remove(elem)
-      pairs.add((elem, s - elem))
+    if ((s - elem) in remaining_values):
+      remaining_values.remove(s - elem)
+      pairs.add((elem,s-elem))
   return pairs
+
+
 
 import unittest
 

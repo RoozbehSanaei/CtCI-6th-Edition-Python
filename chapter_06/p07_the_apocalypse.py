@@ -10,6 +10,34 @@ of the new generation be? (Assume that the odds of someone having a boy or a gir
 pregnancy is equal.) Solve this out logically and then write a computer simulation of it.
 '''
 
+'''
+The provided code simulates a scenario often referred to as the "apocalypse problem" or "gender ratio problem" using a simple model.
+
+    Gender Enumeration:
+        Defines an enumeration Gender with two values: BOY and GIRL.
+
+    Simulate Child Function:
+        Randomly generates the gender of a child, with an equal probability of being a boy or a girl.
+
+    Family Class:
+        Represents a family with a specified number of boys and girls.
+
+    Simulate Family Function:
+        Simulates the creation of a family. 
+        In this model, each family continues to have children until they have a girl
+        The function counts the number of boys born before the first girl and then creates a family with this number of boys and one girl.
+
+    Simulate Apocalypse Function
+        Simulates a large number of families (specified by num_families).
+        For each family, it adds the number of boys and the number of girls to the total counts.
+        Calculates the ratio of boys to the total number of children across all families.
+
+    Test Apocalypse Function
+        Runs the apocalypse simulation with a large number of families (30,000 in this case).
+        Checks if the ratio of boys to the total number of children is close to 0.5, asserting that it should not deviate from 0.5 by more than 0.01.
+    
+'''
+
 class Gender(enum.Enum):
     BOY = enum.auto()
     GIRL = enum.auto()

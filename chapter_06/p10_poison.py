@@ -3,6 +3,43 @@ from typing import List, Optional
 
 DAYS_FOR_RESULT = 7
 
+'''
+
+The code describes a simulation for identifying a poisoned bottle among several bottles using a limited number of test strips. 
+
+Test Strip Class:
+    Represents a test strip that can detect poison. It stores whether it has been poisoned and the day on which it was poisoned.
+
+World Class:
+    Represents the environment containing test strips, bottles, and the number of the poisoned bottle. It also keeps track of the current day.
+
+Initializing the World:
+    The world is initialized with a certain number of test strips, bottles, and the specific number of the poisoned bottle.
+    It maintains a list of test strips and their statuses.
+
+Day Property:
+    Keeps track of the current day in the simulation. It can be incremented but not decreased.
+
+Adding a Drop to a Test Strip:
+    A drop from a bottle can be added to a test strip. 
+    If the bottle is poisoned and the test strip has not yet been poisoned, the strip is marked as poisoned, and the day it was poisoned is recorded.
+
+Identifying Positive Test Strips:
+    The simulation can identify which test strips tested positive for poison. 
+    A test strip is considered positive if it has been poisoned and a certain number of days (specified by DAYS_FOR_RESULT) have passed since it was poisoned.
+
+Finding the Poisoned Bottle:
+    To find the poisoned bottle, the simulation uses a binary representation approach where each test strip represents a binary digit.
+    A drop from each bottle is added to certain test strips based on the binary representation of the bottle number.
+    After waiting for the results (a specified number of days), the simulation determines which test strips are positive.
+    The binary digits represented by the positive test strips are then used to reconstruct the number of the poisoned bottle.
+
+Process Summary:
+    The algorithm effectively uses binary numbers and bitwise operations to efficiently test all bottles with a limited number of test strips. 
+    Each strip's positive or negative result contributes to identifying the binary representation of the poisoned bottle's number, thereby pinpointing the poisoned bottle in a large set with minimal testing resources.
+
+'''
+
 
 class _TestStrip:
     def __init__(self) -> None:

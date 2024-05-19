@@ -14,10 +14,25 @@ Output: f, e, a, b, d, c
 
 
 '''
-Initializing a dependency tree and a list to hold the build order.
-Populating the dependency tree from the given dependencies.
-Iteratively adding to the build list any project whose dependencies are already built, marking it as "built" by removing it from the unbuilt set.
-If it ever can't build a new project in an iteration, it raises an error.
+The determine_build_order function computes a build order for projects with dependencies:
+    
+    Initialize Dependency Mapping: 
+        Creates a mapping for each project to track its dependencies.
+
+    Setup for Build Sequence: 
+        Establishes a list to hold the build sequence and a set of all projects yet to be built.
+
+    Process Dependencies: 
+        Fills in the dependency mapping with the provided project-dependency pairs.
+
+    Build Order Logic:
+        Repeatedly iterates over the projects yet to be built.
+        In each iteration, it checks for projects whose dependencies are already built.
+        Projects with all dependencies built are added to the build sequence and removed from the set of projects yet to be built.
+
+    Handle Impossible Build Order: If in any iteration no project can be built (indicating a deadlock like a circular dependency), an error indicating no valid build order is raised.
+
+    Finalize Build Order: Returns the complete build sequence once all projects are successfully added.
 '''
 
 def determine_build_order(projects, dependencies):

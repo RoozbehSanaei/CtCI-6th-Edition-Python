@@ -2,11 +2,62 @@ import random
 from collections import defaultdict
 
 '''
-Random Node: You are implementing a binary tree class from scratch which, in addition to
-insert, find, and delete, has a method getRandomNode() which returns a random node
-from the tree. All nodes should be equally likely to be chosen. Design and implement an algorithm
-for getRandomNode, and explain how you would implement the rest of the methods.
-Hints: #42, #54, #62, #75, #89, #99, #112, #119
+    Binary Search Tree Components:
+
+        Node Structure:
+            Holds an individual element's value.
+            Links to:
+                A parent element.
+                Two child elements (left and right).
+            Manages subtree size, representing the count of elements in its subtree.
+
+        Binary Search Tree (BST) Structure:
+            Initializes without any elements.
+            Supports operations like:
+                Inserting elements.
+                Deleting elements.
+                Finding specific elements.
+                Randomly selecting elements.
+
+    Operations:
+
+        Adding Elements:
+            Inserts a new element based on BST rules.
+            Traverses the tree to find the correct position.
+            Updates subtree sizes during the insertion process.
+
+        Deletion:
+            Locate the Node to Delete:
+                Start at the tree's root and search for the node with the target value, similar to the search algorithm.
+            If the node is not found, the process ends.
+
+            Node Deletion Cases:
+                Node with No Children (Leaf Node): Simply remove the node.
+                Node with One Child: Remove the node and link its child directly to the node's parent.
+            Node with Two Children: Find the node with the smallest value in the right subtree (often called the successor). Replace the value of the node to be deleted with the successor's value. Then, delete the successor node, which will have at most one child.
+
+            Update Subtree Sizes:
+                After deletion, update the size of each ancestor node to ensure accurate subtree size information. This is done while backtracking from the deletion point to the root.
+
+
+    Finding Specific Nodes in the Binary Search Tree:
+        Start at the tree's root.
+        Compare the target value with the current node's value.
+        If the target is less, move to the left child; if greater, to the right child.
+        Repeat the process until the target value is found or a leaf node is reached.
+        If found, return the node; if not, indicate the value is not in the tree.
+
+    Random Node Selection in the Binary Search Tree
+
+        Starting at the tree's root.
+        At each node, choose among three actions: return the current node, move to the left child, or move to the right child.
+        Make this choice based on weighted probabilities, where the weights are derived from the sizes of the left and right subtrees and the current node (considered as 1).
+        Continue the process until a node is selected.
+
+    Auxiliary Functions:
+        Finding the Smallest Element in a Subtree:
+            Aids in the deletion process.
+            Locates and returns the smallest element in a specified subtree.
 '''
 
 class Node:

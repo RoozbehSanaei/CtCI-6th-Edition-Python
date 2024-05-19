@@ -1,25 +1,14 @@
 # Determine the number of hits and pseudohits for a guess in Mastermind.
-
-COLOR_IX = {'B': 0, 'Y': 1, 'G': 2, 'R': 3}
+import unittest
 
 def mastermind_hits(code, guess):
-  hit_count, pseudohit_count = 0, 0
-  colors_included = [0] * 4
-  colors_hit  = [0] * 4
-  colors_guessed = [0] * 4
-  for i in xrange(4):
-    code_color = COLOR_IX[code[i]]
-    guess_color = COLOR_IX[guess[i]]
-    if code[i] == guess[i]:
-      hit_count += 1
-      colors_hit[code_color] = 1
-    colors_included[code_color] = 1
-    colors_guessed[guess_color] = 1
-  for i in xrange(4):
-    pseudohit_count += colors_guessed[i] & colors_included[i] & ~colors_hit[i]
-  return (hit_count, pseudohit_count)
+    hits = sum(1 for guess_color, code_color in zip(guess, code) if guess_color == code_color)
+    hit_colors = {guess_color for guess_color, code_color in zip(guess, code) if guess_color == code_color}
+    pseudo_hits = len(set(code) & (set(guess) - hit_colors))
+    
+    return hits, pseudo_hits
 
-import unittest
+
 
 class Test(unittest.TestCase):
   def test_mastermind_hits(self):

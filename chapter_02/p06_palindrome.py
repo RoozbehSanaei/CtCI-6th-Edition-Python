@@ -19,20 +19,15 @@ Palindromes are commonly encountered in wordplay and puzzles, and they also have
 '''
 The is_palindrome function checks if a linked list is a palindrome:
 
-    Initialize Pointers and Stack: 
-        Set both fast and slow pointers to the list's head and initialize a stack.
+  Initialization: Two pointers, fast and slow, are initialized at the head of the linked list. A stack is used to keep track of the elements traversed by the slow pointer.
 
-    Identify the Middle: 
-        Move slow one node and fast two nodes per iteration, pushing slow's values onto the stack, until fast reaches the end.
+First Pass: The fast pointer moves at twice the speed of the slow pointer. During this traversal, every node value that the slow pointer passes is pushed onto the stack. This loop continues until the fast pointer reaches the end of the list or the last element, effectively placing the slow pointer at the midpoint of the list.
 
-    Adjust for Odd-Length Lists: 
-        If fast is not None (odd number of elements), move slow forward to skip the middle element.
+Midpoint Adjustment: If the list has an odd number of elements, the fast pointer will not be None at the end of the loop. In this case, move the slow pointer one step forward to skip the middle element.
 
-    Compare Second Half: 
-        Traverse the second half while popping from the stack; return False if any value doesn't match.
+Second Pass: Now, as you traverse the second half of the list with the slow pointer, you pop elements from the stack and compare them with the values of the nodes traversed by slow. If any comparison fails, the function returns False.
 
-    Check for Palindrome: 
-        If all elements match, return True; otherwise, False.
+Final Return: If all the comparisons match, the function returns True, indicating that the list is a palindrome.
 
 '''
 

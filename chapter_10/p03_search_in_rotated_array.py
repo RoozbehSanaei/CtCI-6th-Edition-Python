@@ -1,109 +1,152 @@
 from typing import Optional, Sequence
 
-# Function to find the index of a target element in a rotated sorted array
+'''
+
+
+
+    The function index, which finds the index of a target element in a rotated sorted array,  . Essentially, it's a sorted array in which the starting elements have been moved to the end. 
+    For example, if you take a sorted array like [0, 1, 2, 4, 5, 6, 7] and rotate it by two positions, it becomes [4, 5, 6, 7, 0, 1, 2]:
+
+    
+    
+    Check for an Empty Array:
+      Initially, the function checks if the array nums is empty. If it is, the function returns None, indicating that the search is not possible.  In this case, it's not, so we proceed.
+
+    Handle Duplicate Edge Cases: 
+        If the first and last elements of the array are the same (like [1, 2, 3, 1, 1]), the array might contain duplicates. 
+        In this case, the function performs a linear search to find the target element. If the target is found, its index is returned; otherwise, None is returned.
+        Our array is [4, 5, 6, 7, 0, 1, 2], and the first and last elements (4 and 2) are not the same, so we skip the linear search part.
+
+    Determine Target's Relative Position: 
+        The function then checks if the target value is greater than or equal to the first element of the array and keepts in a flag. 
+    This helps in understanding if the target lies to the left or right of the smallest element (the point where the sorted array was rotated).
+    We check if the target (0) is greater than or equal to the first element (4). It's not, so we know our target is to the right of the smallest element, which is after the rotation point.
+
+    Set Up for Binary Search: 
+        Two pointers, lo (low) and hi (high), are initialized to point at the start and end of the array, respectively. These pointers help in narrowing down the search space.
+        We set lo = 0 and hi = 6 (array length minus one).
+
+    Perform Binary Search: The function then enters a loop to perform a binary search:
+        It calculates the middle index (mid) of the current search space.
+        It checks if the middle element is on the same side as the first element of the array. This step determines whether the middle element is to the left or right of the rotation point in the array.
+        Depending on the position of the middle element and the target element relative to the rotation point, the function adjusts the lo and hi pointers:
+            If the middle element and target are on different sides of the rotation point, the search space is adjusted to the half where the target must be.
+            If both are on the same side, it follows the standard binary search process. If the middle element is less than the target, it narrows the search to the right half; if greater, to the left half.
+        This process repeats until the target is found (in which case its index is returned) or the search space is exhausted (returning None).
+
+        Iteration   lo  hi  mid Mid Element  Action Taken
+        1           0   6   3   7            Set lo to mid + 1 (4) because 7 (mid element) is greater than 0 (target), and 7 is on the left side of rotation while 0 is on the right side (0<4)
+        2           4   6   5   1            Set hi to mid - 1 (4) because 1 (mid element) is greater than 0 (target)
+        3           4   4   4   0            Target found at mid; 0 (mid element) equals 0 (target)
+
+
+
+'''
+
 def index(nums: Sequence[int], target: int) -> Optional[int]:
-    # Handle the case where the input array is empty
     if not nums:
         return None
     
-    # Special case: if the first and last elements are the same, 
-    # we can't do better than O(n). We do a linear search in this case.
     if nums[0] == nums[-1]:
         try:
             return nums.index(target)
         except ValueError:
             return None
     
-    # Determine if the target is to the left of the "wrap-around" point (smallest element)
     is_target_left_of_wraparound = target >= nums[0]
     
-    # Initialize pointers for binary search
     lo, hi = 0, len(nums) - 1
     
-    # Binary search loop
     while lo <= hi:
-        # Calculate mid-point
         mid = (lo + hi) // 2
-        # Determine if the middle element is to the left of the "wrap-around" point
         is_mid_left_of_wraparound = nums[mid] >= nums[0]
         
-        # Check if the middle element is to the left of the "wrap-around" point,
-        # and the target is to the right of the "wrap-around" point.
         if is_mid_left_of_wraparound and not is_target_left_of_wraparound:
-            lo = mid + 1  # Move the lower bound to mid + 1 to search the right half
-            
-        # Check if the middle element is to the right of the "wrap-around" point,
-        # and the target is to the left of the "wrap-around" point.
+            lo = mid + 1
         elif not is_mid_left_of_wraparound and is_target_left_of_wraparound:
-            hi = mid - 1  # Move the upper bound to mid - 1 to search the left half
-
-        # Regular binary search conditions below
+            hi = mid - 1
         elif nums[mid] < target:
             lo = mid + 1
         elif nums[mid] > target:
             hi = mid - 1
         else:
-            # Target found
-            assert nums[mid] == target
             return mid
             
-    # Target not found
     return None
 
 
+'''
+    Initial Check: First, the function checks if the input array is empty. If it is, it returns None, indicating the target cannot be found in an empty array.
+
+    Recursive Search Invocation: If the array is not empty, it calls the _recursive_search function with the full array and the target number, along with the start (0) and end (length of the array minus 1) indices.
+
+    Finding the Middle: In _recursive_search, it calculates the middle index of the current search range.
+
+    Base Cases:
+        If the element at the middle index equals the target number, the index is returned, as the target is found.
+        If the search range is reduced to zero (start index equals end index), and the target is not found, return None.
+
+    Determining Sorted Half:
+        The algorithm checks if the left half of the array is sorted (from start to middle). If the target lies within this range, the search continues recursively in this half.
+        If the right half (from middle to end) is sorted and the target lies within this range, the search continues recursively in this half.
+        If there are duplicates and it's unclear which half is sorted, the algorithm needs to handle this scenario by checking both halves.
+
+    Recursive Calls: Depending on the scenario, _recursive_search is called recursively with updated start and end indices, narrowing down the search range each time.
+
+    Returning the Result: Once the target is found, its index is returned. If not found in any recursive calls, None is returned.
+
+    array[start] < array[middle] | array[middle] < array[end] | array[start] == array[middle] | array[start] <= num < array[middle] | array[middle] < num <= array[end] | array[middle] != array[end] | Recursion Call
+    True                         | -                           | -                             | True                              | -                                    | -                               | _recursive_search(array, num, start, middle - 1)
+    True                         | -                           | -                             | False                             | -                                    | -                               | _recursive_search(array, num, middle + 1, end)
+    -                            | True                        | -                             | -                                 | True                                 | -                               | _recursive_search(array, num, middle + 1, end)
+    -                            | True                        | -                             | -                                 | False                                | -                               | _recursive_search(array, num, start, middle - 1)
+    -                            | -                           | True                          | -                                 | -                                    | True                            | _recursive_search(array, num, middle + 1, end)
+    -                            | -                           | True                          | -                                 | -                                    | False                           | _recursive_search(array, num, start, middle - 1), then if result is None, _recursive_search(array, num, middle + 1, end)
+
+    
+
+    Recursive Call | Start Index | End Index | Middle Index | Middle Element | Action Taken
+    1              | 0           | 6         | 3            | 7              | Since 7 (mid element) is greater than 0 (target), and target could be in the right half [0, 1, 2], search right
+    2              | 4           | 6         | 5            | 1              | Since 1 (mid element) is greater than 0 (target), continue search in left part of this half
+    3              | 4           | 4         | 4            | 0              | Target 0 found at middle index
+
+
+
+
+
+'''
 
 def search_rotated(array: Sequence[int], num: int) -> Optional[int]:
     if not array:
         return None
     return _recursive_search(array, num, 0, len(array) - 1)
 
-
-# Recursive function to search for a number in a rotated sorted array
 def _recursive_search(array, num, start, end):
-    # Calculate the middle index of the current search range
     middle = (end - start) // 2 + start
-    
-    # Base case: If we find the target number, return its index
     if array[middle] == num:
         return middle
-    
-    # Base case: If the search range is empty, the number is not in the array
     if end - start <= 0:
         return None
-    
-    result = None  # Initialize result as None
-    
-    
-    # Case 1: Left half of the array is sorted: 
+    result = None
     if array[start] < array[middle]:
-        # If the number is in the sorted range, search only in that half
         if array[start] <= num < array[middle]:
             result = _recursive_search(array, num, start, middle - 1)
-        # Otherwise, search in the other half
         else:
             result = _recursive_search(array, num, middle + 1, end)
-            
-    # Case 2: Right half of the array is sorted
     elif array[middle] < array[end]:
-        # If the number is in the sorted range, search only in that half
         if array[middle] < num <= array[end]:
             result = _recursive_search(array, num, middle + 1, end)
-        # Otherwise, search in the other half
         else:
             result = _recursive_search(array, num, start, middle - 1)
-    
-    # Case 3: Duplicates are present, and we don't know which half is sorted
     elif array[start] == array[middle]:
-        # If the middle element is different from the end, the right half is sorted
         if array[middle] != array[end]:
             result = _recursive_search(array, num, middle + 1, end)
-        # Otherwise, we must search in both halves
         else:
             result = _recursive_search(array, num, start, middle - 1)
             if result is None:
                 result = _recursive_search(array, num, middle + 1, end)
-    
-    return result  # Return the result
+    return result
+
 
 
 

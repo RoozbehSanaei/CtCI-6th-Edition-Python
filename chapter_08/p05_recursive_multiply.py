@@ -6,6 +6,31 @@ Recursive Multiply: Write a recursive function to multiply two positive integers
 of those operations.
 '''
 
+'''
+The function  takes three parameters: 'a', 'b', and 'answer'. 
+The purpose of this function is to multiply 'a' and 'b' by adding 'a' to 'answer' repeatedly, 'b' times.
+
+Initial Condition Check:
+    The function first checks if 'answer' is 0 and both 'a' and 'b' are not 0. If this is the case, it sets 'answer' to the value of 'a'. 
+    This step initializes the accumulation of the result.
+
+Base Case for 'a' and 'b':
+    The function then checks if either 'a' or 'b' is 1.
+        If 'a' is 1, it returns 'answer'. This is because multiplying by 1 returns the other number, and 'answer' has been accumulating this value.
+        Similarly, if 'b' is 1, it also returns 'answer' for the same reason.
+
+Recursive Call and Accumulation:
+    The function adds the value of 'a' to 'answer', effectively performing a part of the multiplication process.
+    It then makes a recursive call to itself with 'a' unchanged, 'b' decreased by 1 (since one instance of 'a' has been added to 'answer'), and the updated 'answer'.
+
+Repeating the Process:
+    This recursive process repeats, adding 'a' to 'answer' and decreasing 'b' each time, until 'b' reaches 1.
+
+Final Result:
+    Once 'b' is 1, the recursion stops, and 'answer', which now holds the total of 'a' added 'b' times, is returned as the final product.
+'''
+
+
 def multiply(a, b, answer):
     if answer == 0 and a != 0 and b != 0:
         answer = a
@@ -17,6 +42,29 @@ def multiply(a, b, answer):
 
     answer += a
     return multiply(a, b - 1, answer)
+
+
+'''
+Main Function:
+    Purpose: Begins the multiplication process for two numbers.
+    Process:
+        Determines which number is bigger and which is smaller.
+        Calls a helper function with these two numbers.
+
+Recursive Helper Function:
+    Purpose: Calculates the product of the two numbers using a recursive approach.
+    Process:
+        Base Cases:
+            If the smaller number is zero, the function returns zero since any number multiplied by zero is zero.
+            If the smaller number is one, it returns the bigger number because any number multiplied by one is itself.
+        Recursive Steps:
+            Divides the smaller number by two to split the multiplication task.
+            Calls itself to calculate the product of the halved smaller number and the bigger number, keeping this result.
+            If the original smaller number is odd, makes another recursive call with the adjusted smaller number and the bigger number to account for the remainder. If it's even, uses the result from the previous step again.
+        Combining Results:
+            Adds the results of the two recursive calls to get the total product.
+
+'''
 
 
 # Solution 1
@@ -42,6 +90,29 @@ def min_product_helper(smaller, bigger):
 
     return side1 + side2
 
+
+'''
+    Main Function:
+        Purpose: Initiates the multiplication of two numbers.
+        Process:
+            Identifies the larger and smaller of the two numbers.
+            Calls a helper function, passing these numbers and an empty memoization dictionary.
+
+    Recursive Helper Function with Memoization:
+        Purpose: Recursively calculates the product of the two numbers, using memoization to store and reuse previously calculated results.
+        Process:
+            Base Cases:
+                Returns zero if the smaller number is zero, as multiplying by zero results in zero.
+                Returns the larger number if the smaller number is one, since multiplying by one gives the number itself.
+            Memoization Check:
+                Checks if the current value of the smaller number is already in the memoization dictionary. If it is, returns the stored result to avoid redundant calculations.
+            Recursive Steps:
+                Divides the smaller number by two to simplify the multiplication task.
+                Makes a recursive call to calculate the product of this halved number and the larger number, using the memoization dictionary. This result is stored.
+                For an odd smaller number, makes an additional recursive call with the adjusted smaller number to handle the remaining value. For an even number, the previous result is used again.
+            Combining Results with Memoization:
+                Adds the results of the two recursive calls, stores this sum in the memoization dictionary under the current smaller number, and returns this sum.
+'''
 
 # Solution 2
 def min_product_2(a, b):
@@ -70,6 +141,26 @@ def min_product_2_helper(smaller, bigger, memo):
     memo[smaller] = side1 + side2
     return memo[smaller]
 
+'''
+    Main Function:
+        Purpose: Begins the multiplication process for two numbers.
+        Process:
+            It determines which of the two numbers is larger and which is smaller.
+            Initiates a helper function with these two numbers for the recursive multiplication process.
+
+    Recursive Helper Function:
+        Purpose: Performs the multiplication using recursion.
+        Process:
+            Base Cases:
+                If the smaller number is zero, the function returns zero, as multiplying by zero results in zero.
+                If the smaller number is one, it returns the larger number, as multiplying by one gives the number itself.
+            Recursive Calculation:
+                The function halves the smaller number to break down the multiplication into a smaller problem.
+                It calls itself recursively with this halved number and the larger number, storing the result of this half multiplication.
+            Final Combination:
+                If the smaller number is even, it doubles the result of the half multiplication (adding it to itself) and returns this as the final product.
+                If the smaller number is odd, it adds the larger number to the doubled half product to account for the remainder and returns this sum as the final product.
+'''
 
 # Solution 3
 def min_product_3(a, b):
@@ -92,27 +183,41 @@ def min_product_3_helper(smaller, bigger):
     return half_prod + half_prod + bigger
 
 
+'''
 
-# Solution 4 (non-recursive)
+    Converting to Binary:
+        The algorithm begins by converting one of the numbers (let's say 'b') into its binary representation. T
+        his is done to utilize the binary digits of 'b' in the multiplication process.
+
+    Setting up for the Multiplication:
+        A variable is initialized to hold the product of the multiplication. Initially, this is set to zero.
+
+    Iterating Through Binary Digits:
+        The algorithm then iterates through each binary digit of the converted number 'b', starting from the least significant bit (the rightmost bit).
+
+    Multiplying using Binary Digits:
+        For each bit in the binary representation of 'b', the algorithm checks if the bit is 1.
+        If the bit is 1, it performs a partial multiplication by shifting the other number 'a' to the left by the current bit's position 
+        (i.e., multiplying 'a' by 2 raised to the power of the bit's position). 
+        This left shift is equivalent to multiplying 'a' by 2 for each position the bit has moved from the rightmost end.
+        This partial product is then added to the running total of the product.
+
+    Final Product:
+        After iterating through all the bits of 'b', the accumulated sum represents the final product of 'a' and 'b'.
+
+'''
+
+
+
 def multiply_bit_based(a, b):
-    # Convert integer 'b' to its binary representation as a string
     b_bin = bin(b)
-  
-    # Slice off the '0b' prefix to keep only the binary digits
     b_bin = b_bin[2:]
-  
     prod = 0
   
-    # Iterate over the length of the binary representation of 'b'
-    for i in range(len(b_bin)):  # O(len(b_bin))
-  
-        # Check if the bit at the i-th position from the right is 1
+    for i in range(len(b_bin)):  
         if int(b_bin[-i - 1]):
-  
-            # Left-shift 'a' by 'i' bits and add it to 'prod'
             prod = prod + (a << i)
   
-    # Return the final product
     return prod
 
 

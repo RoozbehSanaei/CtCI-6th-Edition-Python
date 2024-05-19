@@ -1,4 +1,4 @@
-# Implement rand7 from rand5.
+C# Implement rand7 from rand5.
 
 def rand7():
   rand14 = rand5()
@@ -29,7 +29,7 @@ def alt_rand7():
   else:
     return alt_rand7()
 
-import unittest
+import unittesthw
 import random
 
 random.seed = 0

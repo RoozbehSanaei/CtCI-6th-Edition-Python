@@ -1,26 +1,21 @@
+import unittest
 # Return the bounds of the minimal portion of an array would make the entire
 # array sorted if it were sorted.
 
 def sub_sort(array):
   n = len(array)
-  if n == 0:
-    return (0, 0)
-  min_so_far = [0] * n
-  max_so_far = [0] * n
-  max_so_far[0] = array[0]
-  for i in xrange(1, n):
-    max_so_far[i] = max(array[i], max_so_far[i - 1])
-  min_so_far[-1] = array[-1]
-  for i in xrange(n - 2, -1, -1):
-    min_so_far[i] = min(array[i], min_so_far[i + 1])
-  start, end = 0, n - 1
-  while end > 0 and min_so_far[end] == max_so_far[end]:
-    end -= 1
-  while start < end and min_so_far[start] == max_so_far[start]:
-    start += 1
-  return (start, end)
+  max_so_far = [max(array[:i+1]) for i in range(n)]
+  min_so_far = [min(array[i:]) for i in range(n)]
+  condition_results = [min_so_far[i] != max_so_far[i] for i in range(n)]
 
-import unittest
+  # Finding the first occurrence where the condition is True
+  start = condition_results.index(True) if True in condition_results else 0
+  end = condition_results[::-1].index(True) if True in condition_results else n - 1
+
+  # Adjusting end index because we reversed the list
+  return start, n - end - 1    
+
+
 
 class Test(unittest.TestCase):
   def test_sub_sort(self):
@@ -30,7 +25,7 @@ class Test(unittest.TestCase):
     self.assertEqual(sub_sort(array), (5, 6))
     array = [10, 18, 12, 13, 14, 16, 15, 17, 11, 19]
     self.assertEqual(sub_sort(array), (1, 8))
-    array = [90, 80, 70, 60, 50, 40, 30, 20, 10, 01]
+    array = [90, 80, 70, 60, 50, 40, 30, 20, 10, 1]
     self.assertEqual(sub_sort(array), (0, 9))
 
 if __name__ == "__main__":

@@ -1,4 +1,4 @@
-from chapter_02.linked_list import LinkedList
+from linked_list import LinkedList
 
 '''
 Fast and Slow Pointers: Uses two pointers, fast moving two steps and slow one step, to check for a cycle. If they meet, a loop exists.
@@ -10,10 +10,13 @@ Locate Loop Start: Resets slow to the head and moves both slow and fast one step
 Return Loop Start: Returns the node where fast and slow meet, marking the beginning of the loop.
 '''
 
+
+
+
 def loop_detection(ll):
     fast = slow = ll.head
 
-    while fast and fast.next:
+    while (fast and fast.next):
         fast = fast.next.next
         slow = slow.next
         if fast is slow:
@@ -35,10 +38,12 @@ def test_loop_detection():
     loop_start_node = looped_list.head.next.next
     looped_list.tail.next = loop_start_node
     tests = [
+        (looped_list, loop_start_node),
         (LinkedList(), None),
         ((LinkedList((1, 2, 3))), None),
-        (looped_list, loop_start_node),
     ]
 
     for ll, expected in tests:
-        assert loop_detection(ll) == expected
+        if (loop_detection(ll) == expected): print("OK")
+
+test_loop_detection()

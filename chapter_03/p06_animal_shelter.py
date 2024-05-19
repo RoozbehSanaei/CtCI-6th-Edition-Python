@@ -33,11 +33,8 @@ class LinkedList:
             self.head = node
             return
         current_node = self.head
-        # it goes through the list until it reaches the last node.
         while current_node.next_node is not None:
-            # effectively going to the next node.
             current_node = current_node.next_node
-        # attaches the new node to the end of the list.
         current_node.next_node = node
 
     def pop_head(self):

@@ -1,5 +1,7 @@
 import unittest
 
+# Implement an algorithm to print all valid (e.g. properly opened and closed) combinations of n pairs of paranthesis
+
 '''
 You can think of each permutation as a kind of "number," where each element or digit contributes to its lexicographic "value." 
 Just like how you find the next integer by looking at the units place, tens place, hundreds place, etc., you do something similar to find the next permutation.

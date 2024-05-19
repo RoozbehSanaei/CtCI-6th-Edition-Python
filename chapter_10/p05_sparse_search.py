@@ -6,44 +6,63 @@ Input: ball,{"at",
 ""}'
 '''
 
+'''
+Top-Level Function - sparse_search:
+    Purpose: Initiates the search process for a specific item in a sparse sorted array.
+    Process:
+        Calls a nested inner function, inner_search, passing the entire range of the array for the initial search.
+
+Nested Function for Binary Search - inner_search:
+    Purpose: 
+        Handles the binary search within the array, accommodating for sparse elements (empty strings).
+    Process:
+        Initialization: 
+            Starts with low and high indices defining the current search range.
+        Finding the Middle Element:
+            Calculates the middle index of the current range.
+            If the middle element is an empty string, searches for the nearest non-empty string.
+        Handling Sparse Elements:
+            Initializes two pointers, left and right, around the middle index.
+            Expands these pointers outward until a non-empty string is found or the pointers go out of bounds.
+            Updates the middle index to the index of the first non-empty string found.
+        Binary Search Logic:
+            If a non-empty middle element is found, compares it with the target item.
+            Base Case: If the item matches, returns its index.
+            Recursive Steps:
+                If the item is smaller than the middle element, recursively searches the left half of the current range.
+                If the item is larger, recursively searches the right half.
+
+Returning the Result:
+    The recursive search either finds the item and returns its index or concludes that the item is not in the array, returning None.
+'''
+
 def sparse_search(arr, item):
-    # Inner function to handle the actual binary search
     def inner_search(arr, item, low, high):
-        # Calculate the middle index
         middle = ((high - low) // 2) + low
 
-        # Check if the middle element is an empty string
         if arr[middle] == "":
-            # Initialize pointers for left and right of middle
             left = middle - 1
             right = middle + 1
 
-            # Search for the nearest non-empty string in the array
             while True:
-                # If both left and right pointers go out of bound, return None
                 if left < low and right > high:
                     return None
-                # If right pointer is within bound and points to a non-empty string, update middle
                 elif right <= high and arr[right] != "":
                     middle = right
                     break
-                # If left pointer is within bound and points to a non-empty string, update middle
                 elif left >= low and arr[left] != "":
                     middle = left
                     break
-                # Move the pointers
                 left -= 1
                 right += 1
 
-        # Standard binary search logic from this point
         if arr[middle] == item:
-            return middle  # Found the item, return its index
+            return middle
         if arr[middle] > item:
-            return inner_search(arr, item, low, middle - 1)  # Continue search in lower half
+            return inner_search(arr, item, low, middle - 1)
         if arr[middle] < item:
-            return inner_search(arr, item, middle + 1, high)  # Continue search in upper half
+            return inner_search(arr, item, middle + 1, high)
 
-    # Initial call to the inner_search function with the full array range
     return inner_search(arr, item, 0, len(arr) - 1)
 
 

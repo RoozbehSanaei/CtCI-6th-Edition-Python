@@ -2,23 +2,45 @@
 import os
 
 '''
-    Divide the Big File: It reads the large file line by line and creates smaller temporary files. Each of these smaller files is small enough to be sorted in memory.
+    Main Function - sort_big_file:
+        Purpose: Orchestrates the overall process of sorting a large file.
+        Process:
+            Initialization: 
+              Opens the input file and creates the first temporary file for sorting chunks of the input file.
+            Chunk Creation and Writing: 
+              Reads the input file line by line, writing each line to a temporary file. 
+              It ensures that the size of each temporary file does not exceed a set limit.
+            Chunk Sorting: 
+              Once all lines are written to temporary files, it closes these files and sorts each one in memory.
+            Merging Sorted Files: 
+              After sorting, it merges these files into a single output file using a min-heap for efficient sorting.
 
-    Sort the Small Files: Each of these smaller files is then sorted using basic in-memory sorting.
+    MinHeap Class:
+        Purpose: Provides a min-heap structure to facilitate efficient merging of sorted chunks.
+        Functionality:
+        Adding Elements (add):
+            Inserts a new element into the heap.
+            Adjusts the heap by moving the new element up until the min-heap property is maintained. 
+            This is achieved by comparing the newly added element with its parent and swapping if necessary, continuing this process up the heap.
+            (The parent of the current node at index ix is at index ix/2.)
+        Removing Elements (remove):
+            Removes and returns the minimum element (at the root) from the heap.
+            It iterates down the heap, starting from a given node, and swaps it with its smaller child to maintain the heap's order. 
+            The process continues until the node is smaller than its children or it reaches the bottom of the heap, ensuring the smallest element always remains at the top of the heap.
+              
 
-    Merge Sorted Files: The sorted smaller files are then merged into a single sorted file. This is done with the help of a MinHeap.
+    Merging Process:
+        Heap Initialization: 
+          Initializes the min-heap and adds the first line of each sorted chunk to the heap.
+        Efficient Merging:
+            Repeatedly extracts the minimum element (line) from the heap and writes it to the output file.
+            For each line written to the output file, reads the next line from the corresponding temporary file and adds it to the heap.
+            Continues this process until all lines are processed and written in sorted order.
 
-Let's break down the merging part:
-
-    Initialize MinHeap: A MinHeap is initialized and filled with the first line from each sorted temporary file.
-
-    Smallest Element: The smallest element (i.e., line) among all the temporary files is at the top of the MinHeap.
-
-    Write and Replace: This smallest element is written to the final output file. Then, the next line from the same temporary file that provided this smallest element is read and inserted into the MinHeap.
-
-    Iterate: This process of "write smallest, replace, reheapify" continues until the MinHeap is empty, meaning all lines from all temporary files have been written to the final sorted output file.
+    Finalization:
+        Output File Completion: Closes the output file after all merged lines are written.
+        Cleanup: Closes and deletes all temporary files used in the sorting process.
 '''
-
 
 ONE_GIGABYTE = 64
 
@@ -72,9 +94,10 @@ class MinHeap(object):
   def add(self, item):
     self.data.append(item)
     ix = len(self.data) - 1
-    while ix and (item < self.data[ix/2]):
-      self.data[ix], self.data[ix/2] = self.data[ix/2], item
-      ix /= 2
+    while ix and (item < self.data[ix/2]):  # Continue as long as ix is not 0 and item is smaller than its parent
+        self.data[ix], self.data[ix/2] = self.data[ix/2], item  # Swap item with its parent to maintain heap order
+        ix /= 2  # Move up to the parent's index for the next iteration
+
   
   def remove(self):
     if len(self.data) == 1:
@@ -84,14 +107,23 @@ class MinHeap(object):
     minimum = self.data[1]
     self.data[1] = self.data.pop()
     ix = 1
-    while 2*ix < len(self.data):
-      child_ix = 2*ix
-      if 2*ix+1 < len(self.data) and self.data[child_ix] > self.data[2*ix+1]:
-        child_ix = 2*ix + 1
+    while 2 * ix < len(self.data):  # Continue as long as there's at least one child
+      child_ix = 2 * ix  # Start with the left child's index
+
+      # Check if right child exists and is smaller than the left child
+      if 2 * ix + 1 < len(self.data) and self.data[child_ix] > self.data[2 * ix + 1]:
+          child_ix = 2 * ix + 1  # Use the right child instead
+
+      # If the current node is smaller than or equal to the smaller child, stop
       if self.data[child_ix] >= self.data[ix]:
-        break
+          break
+
+      # Swap the current node with its smaller child
       self.data[child_ix], self.data[ix] = self.data[ix], self.data[child_ix]
+
+      # Update the index to the child's index for the next iteration
       ix = child_ix
+
     return minimum
 
 import unittest

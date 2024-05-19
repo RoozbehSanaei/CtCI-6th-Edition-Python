@@ -1,10 +1,19 @@
 from chapter_04.binary_tree import BinaryTree, Node
 
 '''
-Check Subtree: Tl and T2 are two very large binary trees, with Tl much bigger than T2. Create an
-algorithm to determine if T2 is a subtree of Tl.
-A tree T2 is a subtree of Tl if there exists a node n in Tl such that the subtree of n is identical to T2.
-That is, if you cut off the tree at node n, the two trees would be identical.
+The code defines a custom node class for a binary tree, where each node can be compared to another node. 
+The comparison checks if both nodes have the same value and their respective left and right child nodes are also equal.
+
+Additionally, there's a custom binary tree class using these specialized nodes.
+
+The main functionality includes a method to determine if one binary tree is a subtree of another. 
+It checks if the structure and values of the second tree (the potential subtree) completely match a part of the first tree. 
+This method first ensures both trees are valid (not empty) and then uses a recursive helper method to perform the comparison.
+
+The recursive helper method checks each node in the first tree to see if it matches the root of the second tree.
+ If it finds a match, it further checks if the entire structure beneath that node matches the second tree, 
+ confirming it as a subtree. If not, it recursively checks the same for each child node of the current node in the first tree.
+
 '''
 
 class ComparableTreeNode(Node):
@@ -30,11 +39,7 @@ def is_subtree(haystack_tree, needle_tree):
         return False
     return _is_subtree(haystack_tree.root, needle_tree.root)
 
-'''
-The _is_subtree function recursively searches the larger tree to find if a node matches the root of the smaller tree, along with its descendants. 
-It first checks if either node is None and returns False if so. Then it checks for a match. If no match is found, 
-it continues the search in the left and right children of the current node in the larger tree.
-'''
+
 
 def _is_subtree(haystack_node, needle_node):
     if haystack_node is None or needle_node is None:

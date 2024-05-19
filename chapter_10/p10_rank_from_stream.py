@@ -9,36 +9,49 @@ Stream (in order of appearance): 5, 1, 4, 4, 5, 9, 7, 13, 3
 getRankOfNumber(l) 0
 getRankOfNumber(3) = 1
 getRankOfNumber(4) 3
+
 '''
+'''
+    Initialization (__init__):
+        When a new node is created, it's initialized with data (if provided). 
+        If no data is given, the node is considered empty.
+        Each node keeps track of its data, left and right children (initially None), its own count (number of times its data occurs), and the count of nodes in its left subtree.
+
+    Tracking Items (track):
+        This method inserts a new item into the BST and updates counts appropriately:
+            If the current node is empty, the item becomes the node's data, and its count is set to 1.
+            If the item equals the current node's data, the node's count is incremented.
+            If the item is smaller than the node's data, it's recursively inserted into the left subtree.
+            The left_count of the current node (count of nodes in the left subtree) is also incremented.
+            If the item is greater, it's recursively inserted into the right subtree.
+
+    Calculating Rank (get_rank):
+        This method calculates the rank of an item in the BST, which is the number of elements less than or equal to the given item:
+            If the current node is empty, the rank is 0 (the item is not in the tree).
+            If the item matches the current node's data, the rank is the count of the left subtree (left_count).
+            If the item is smaller, the rank is found by recursively checking the left subtree.
+            If the item is larger, the rank is calculated by adding the left_count, the count of the current node, and the rank obtained recursively from the right subtree.
+
+'''
+
 class RankNode(object):
     def __init__(self, data=None):
-        # Initialize the node with the given data.
-        # If the node is created without data, it is considered empty, and 'count' is set to 0.
-        # 'left_count' is always initialized to 0.
         self.data = data
         self.left, self.right = None, None
         self.count = 1 if self.data is not None else 0
         self.left_count = 0
 
-  # This method inserts a new integer into the BST and updates the relevant count and left_count values:
-  ''' the "current node" starts as the root of the BST when the method is first called, and it changes as the method calls itself
-  recursively, traversing down the tree.'''
-
     def track(self, item):
-        # If the current node is empty, set its data to the given item and initialize 'count' to 1.
         if self.data is None:
             self.data = item
-        # If the item is equal to the current node's data, increment 'count' by 1.
         elif self.data == item:
             self.count += 1
-        # If the item is smaller than the current node's data, update 'left_count' and insert the item in the left subtree.
         elif self.data > item:
             self.left_count += 1
             if self.left:
                 self.left.track(item)
             else:
                 self.left = RankNode(item)
-        # If the item is greater than the current node's data, insert the item in the right subtree.
         else:
             if self.right:
                 self.right.track(item)
@@ -46,18 +59,14 @@ class RankNode(object):
                 self.right = RankNode(item)
 
     def get_rank(self, item):
-        # If the current node is empty, return 0 (the item is not in the tree).
         if self.data is None:
             return 0
-        # If the item is equal to the current node's data, return 'left_count'.
         elif self.data == item:
             return self.left_count
-        # If the item is smaller than the current node's data, find its rank in the left subtree.
         elif self.data > item:
             if self.left:
                 return self.left.get_rank(item)
             return 0
-        # If the item is greater than the current node's data, calculate its rank considering the left subtree and the current node.
         else:
             right_rank = 0 if not self.right else self.right.get_rank(item)
             return self.left_count + self.count + right_rank

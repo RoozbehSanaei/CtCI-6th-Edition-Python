@@ -11,6 +11,62 @@ constraints:
 Write a program to move the disks from the first tower to the last using stacks.
 '''
 
+'''
+Stack Class:
+
+    Initialization: 
+        This class represents a stack with a limited size. 
+        It uses deque to allow adding and removing elements from both ends.
+        
+    String Representation: 
+        The stack can be converted to a string that shows its elements in stack order (top element first).
+    
+    Push: 
+        Adds a new element to the top of the stack. If the stack is full, it triggers a custom error.
+    
+    Pop: 
+        Removes and returns the top element of the stack. If the stack is empty, it triggers an error.
+    
+    Top: 
+        Retrieves the top element without removing it. If the stack is empty, it triggers an error.
+
+MultiStack Class:
+    Initialization: 
+        Creates a collection of stacks, each with a specified size.
+    
+    Get Stack: 
+        Retrieves one of the stacks based on its position in the collection.
+    
+    Push, Pop, Top: 
+        These operations are applied to a specific stack within the collection.
+    
+    String Representation: 
+        Provides a textual representation of all the stacks in the collection.
+
+Towers of Hanoi Class:
+    Initialization: 
+        This class sets up the Towers of Hanoi puzzle using a specific number of disks.
+        It organizes these disks on one of the towers in decreasing size, with the largest disk at the bottom and the smallest on top, 
+        employing stack push operations to place each disk.
+
+    Solve Method: 
+        This method leverages recursion to move disks between the towers following the puzzle's rules. 
+
+    Recursive Solution Method:
+        The solution involves recursively moving subsets of disks between the towers. 
+        The process uses stack operations, disks are popped from one tower (stack) and pushed onto another. 
+        This is done in a specific sequence to ensure compliance with the puzzle's rules:
+            Move a smaller subset of disks to a temporary tower (using stack pop from the initial tower and push to the temporary tower).
+            Move the largest disk to the target tower (using stack pop from the initial tower and push to the target tower).
+            Move the subset of disks from the temporary tower to the target tower (using stack pop from the temporary tower and push to the target tower).
+
+    String Representation: 
+        The class provides a method to visualize the current state of the Towers of Hanoi puzzle, showing the arrangement of disks on each tower.
+
+    Accessing Specific Towers: 
+        There is functionality to access the state of a specific tower in the puzzle, essentially allowing inspection of the individual stack representing that tower.
+'''
+
 
 # Custom Exceptions
 class StackTooBigError(Exception):

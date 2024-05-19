@@ -22,7 +22,7 @@ def intersection(s1, s2):
       return s1.p1
     if abs(s1.p2.dist(s2.p1) + s1.p2.dist(s2.p2) - s2_len) < THRESHOLD:
       return s1.p2
-    
+     
     # If no endpoint lies on the other segment, no intersection.
     return None
   

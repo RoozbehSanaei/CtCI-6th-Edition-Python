@@ -4,36 +4,48 @@ from typing import Optional
 Next Number: Given a positive integer, print the next smallest and the next largest number that
 have the same number of 1 bits in their binary representation.
 '''
+
+'''
+The provided code consists of two functions, _bit and next_smaller, which work together to find the next smaller number 
+with the same number of 1 bits in its binary representation as a given number. Here's how the algorithm works in natural language:
+
+
+Function to Check a Specific Bit
+    This function determines if a specific bit (indicated by its position) in a given number is set to 1. It does this by shifting 1 to the left by the position of the bit and then performing a bitwise AND with the given number. If the result is non-zero, it means the bit at that position is 1; otherwise, it's 0.
+
+Function to Find the Next Smaller Number
+    Check for Special Case: 
+        First, the function checks if the given number is of a form where all bits are 1s (like 111 in binary). For such numbers, there's no smaller number with the same number of 1s, so it returns None.
+    
+    Count Trailing Ones and Zeros: 
+        The function counts the number of consecutive 1s and 0s at the least significant end (rightmost end) of the number's binary representation by:
+            Counting how many times the least significant bit is 1 and incrementing a ones counter.
+            Once a 0 is encountered, it starts counting how many consecutive zeros follow these ones and increments a zeros counter.
+    
+    Create the Next Smaller Number: T
+        he algorithm then constructs the next smaller number by:
+            Turning off (setting to 0) the rightmost 1 that's not part of the trailing ones.
+            Turning on (setting to 1) a 0 immediately to the right of this bit.
+            This approach retains the same number of 1s but ensures a smaller number by moving a 1 to a less significant position.
+    
+    Return the Result: 
+        The function calculates and returns this new number.
+'''
 def _bit(x: int, i: int) -> int:
-    # The expression (1 << i) computes 2^i, effectively setting the i-th bit to 1 and all other bits to 0.
-    # The bitwise AND operation (x & (1 << i)) will return a non-zero value if the i-th bit of x is 1,
-    # and 0 if the i-th bit of x is 0.
     return x & (1 << i)
 
-
-
 def next_smaller(x: int) -> Optional[int]:
-    # Check if x is a number like 7 (111 in binary), where all bits are 1s.
-    # For such numbers, a smaller number with the same number of 1s doesn't exist.
     if not x & (x + 1):
         return None
     
-    # Initialize counters for the number of consecutive 1s (ones)
-    # and zeros (zeros) in the least significant bits of x.
     zeros = ones = 0
     
-    # Count the number of trailing 1s in x's binary representation.
     while _bit(x, i=ones):
         ones += 1
     
-    # Count the number of trailing zeros following the trailing 1s.
     while not _bit(x, i=ones + zeros):
         zeros += 1
     
-    ''' The idea is to take the rightmost 1 that's not part of the trailing 1s and switch it off (make it 0). 
-    Then, immediately to its right, switch on a 0 (make it 1). This retains the same number of 1s but creates a 
-    smaller number because you've moved a 1 to a less significant bit.
-    '''
     return x - (1 << ones) - (1 << zeros - 1) + 1
 
 

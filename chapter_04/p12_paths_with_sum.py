@@ -3,11 +3,33 @@ from chapter_04.binary_tree import BinaryTree
 # Brute Force O(NlogN)
 
 '''
-Paths with Sum: You are given a binary tree in which each node contains an integer value (which
-might be positive or negative). Design an algorithm to count the number of paths that sum to a
-given value. The path does not need to start or end at the root or a leaf, but it must go downwards
-(traveling only from parent nodes to child nodes).
+The code outlines a method for counting the number of paths in a binary tree where the sum of the values along each path equals a specified target. 
+It employs a depth-first approach to explore all potential paths in the tree, checking if their summed values match the target. 
+It considers paths starting from every node and traverses through all branches to ensure comprehensive coverage.
+
+Entry Point Function
+
+    This function starts the process and checks if the provided input is a binary tree. If not, it halts and returns a null value.
+    If the input is a valid binary tree, it initiates a recursive process starting from the tree's root node, aiming to count the paths that sum up to the target value.
+
+Recursive Path Counting Function
+
+    This function is designed to traverse the tree starting from a specific node.
+    It calculates the number of valid paths in three different scopes:
+        Paths beginning from the current node.
+        Paths within the left subtree.
+        Paths within the right subtree.
+    For each scope, it accumulates the count of paths that sum up to the target.
+
+Path Sum Calculation Function
+
+    This function is focused on counting paths starting from a particular node.
+    It reduces the target sum by the value of the current node and checks if this results in zero, indicating a valid path.
+    It then proceeds to count similar valid paths starting from both the left and right children of the current node, adding up these counts.
 '''
+
+
+
 
 def count_sum_paths(tree, target):
     if not isinstance(tree, BinaryTree):
@@ -28,11 +50,7 @@ def _count_sum_paths(node, target_sum):
 def pathsfrom(node, target_sum):
     if not node:
         return 0
-    '''
-    Subtracting the node's value from target_sum lets us know if we've found a valid path that adds up to the original target. 
-    If it reaches zero, we increment the counter.
-    '''
-    
+
     target_sum -= node.key
     counter = 0
     if target_sum == 0:
@@ -40,9 +58,6 @@ def pathsfrom(node, target_sum):
     return (
         counter + pathsfrom(node.left, target_sum) + pathsfrom(node.right, target_sum)
     )
-
-
-# Optimized O(N)
 
 
 def count_sum_paths_optimized(tree, target_sum):

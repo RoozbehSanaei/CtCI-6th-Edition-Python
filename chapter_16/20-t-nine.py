@@ -1,5 +1,9 @@
 # Determine which words match a sequence of T9 key presses.
-
+''' T9: On old cell phones, users typed on a numeric keypad and the phone would provide a list of words 
+that matched these numbers. Each digit mapped to a set of O - 4 letters. Implement an algorithm 
+to return a list of matching words, given a sequence of digits. You are provided a list of valid words 
+(provided in whatever data structure you'd like). The mapping is shown in the diagram below:'''
+ 
 LETTERS = {0: [], 1: [], 2: ['a','b','c'], 3: ['d','e','f'], 4: ['g','h','i'],
   5: ['j','k','l'], 6: ['m','n','o'], 7: ['p','q','r','s'],
   8: ['t','u','v'], 9: ['w','x','y','z']}
@@ -9,7 +13,7 @@ PREFIX_TREE = {'a':{'b':{'':True,'a':{'c':{'u':{'s':{'':True}}}}}},
                'u':{'s':{'':True,'e':{'':True,'d':{'':True},
                                       'r':{'':True},'s':{'':True}}}},
                'z':{'o':{'o':{'':True,'m':{'':True}}}}}
-
+                                                
 def t9_words(digits):
   if len(digits) == 0:
     return []

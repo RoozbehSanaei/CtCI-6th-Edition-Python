@@ -10,40 +10,47 @@ so it can place the largest elements at the end first and proceed in descending 
 This ensures that smaller elements don't overwrite larger ones as the algorithm progresses.
 '''
 
+'''
+The sorted_merge algorithm is designed to merge two sorted lists into a single sorted list.
+
+    Prepare for Merging:
+        You have two lists. The first one has extra space at its end, just enough to accommodate all elements of the second list.
+
+    Start from the End:
+        Begin at the end of both lists. The idea is to fill the extra space in the first list by comparing elements from both lists, starting from their ends.
+
+    Compare and Place:
+        Compare the last elements of both lists.
+        If the last element of the first list (ignoring the extra space) is larger than the last element of the second list, 
+        place this larger element in the last available space of the first list.
+        Otherwise, place the last element of the second list in this space.
+
+    Move Backwards Through Lists:
+        After placing an element, move backwards in the list from which the element was taken.
+        Continue the comparison and placement, moving backwards through both lists.
+
+    Repeat Until Done:
+        Keep repeating this process. Each time, either the last considered element of the first list or the second list is placed into the correct position in the extra space of the first list.
+
+    Finish with a Merged List:
+        The process continues until all elements of the second list are placed. This results in the first list containing all elements from both lists, now sorted.
+
+'''
 
 def sorted_merge(a, b):
-    # Initialize index to point to the last element of array 'a'
     index = len(a) - 1
-    
-    # Initialize index_b to point to the last element of array 'b'
     index_b = len(b) - 1
-    
-    # Initialize index_a to point to the last "real" element in 'a' (ignoring extra spaces)
     index_a = len(a) - len(b) - 1
 
-    # Loop runs until all elements of 'b' are considered
     while index_b >= 0:
-        
-        # Check if the current element at index_a in 'a' is greater than the current element at index_b in 'b'
         if index_a >= 0 and a[index_a] > b[index_b]:
-            
-            # If so, place this element from 'a' into the sorted position (pointed by 'index') in 'a'
             a[index] = a[index_a]
-            
-            # Decrement index_a to move to the next largest element in 'a'
             index_a -= 1
         else:
-            # Place the current element from 'b' into the sorted position (pointed by 'index') in 'a'
             a[index] = b[index_b]
-            
-            # Decrement index_b to move to the next largest element in 'b'
             index_b -= 1
-        
-        # Decrement index to move to the next largest sorted position in 'a' (if index > 0)
         if index > 0:
             index -= 1
-    
-    # Return the sorted, merged array
     return a
 
 

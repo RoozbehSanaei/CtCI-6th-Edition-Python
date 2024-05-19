@@ -9,6 +9,13 @@ so that none of them share the same row, column, or diagonal. In this case, "dia
 diagonals, not just the two that bisect the board.
 '''
 
+
+'''
+This algorithm determines if placing a queen on a specified row and column of a chessboard is valid, considering the positions of other queens already on the board.
+It checks for the presence of other queens in three directions: all rows above the specified row, the same row, and both upper diagonals (left and right) of the specified position.
+If any of these checks find a queen, the position is deemed invalid. If no queens are found in these directions, the position is considered valid for placing a queen.
+
+'''
 def position_is_valid(row, col, board):
 
     # Check if there are any queens in the rows above this position
@@ -43,41 +50,40 @@ def position_is_valid(row, col, board):
     return True
 
 
+'''
+Main Function:
 
-# Importing deepcopy to make copies of the board
-# from copy import deepcopy  # Uncomment this if 'copy' is not imported in your code
+    Purpose: Initiates the process to find all valid arrangements of 'n' queens on an 'n x n' chessboard.
+    Process:
+        Creates an initial empty chessboard represented by a grid.
+        Calls a helper function to start placing queens, beginning from the first row.
 
+Helper Function :
+
+    Purpose: Attempts to place queens row by row on the board.
+    Process:
+        Base Case: If the row number equals 'n', it means queens have been successfully placed in all rows. The current board arrangement is then added to the list of valid solutions.
+        Recursive Step: For each row, the function iterates through each column:
+            It calls a validation function to check if placing a queen in the current row and column is valid.
+            If valid, a queen is placed, and the function recursively calls itself for the next row.
+            After exploring this path (either leading to a solution or a dead end), it backtracks by removing the queen from the current cell and proceeds to try the next column.
+        This recursive and backtracking approach continues until all possible arrangements for the current row (and subsequently all rows) are explored.
+
+'''
 def queens(n=8):
-    # Nested helper function for backtracking algorithm
     def helper(row, board):
-        # If all rows have been processed, a valid arrangement has been found
         if row == n:
             arrangements.append(copy.deepcopy(board))
-            # Uncomment below to print each valid arrangement
-            # print('$'*20)
-            # pprint.pprint(board)
-            # print('$'*20)
         else:
-            # Loop through each column in the current row
             for col in range(len(board[row])):
-                # Check if placing a queen here is valid
                 if position_is_valid(row, col, board):
-                    # Place the queen
                     board[row][col] = "Q"
-                    # Make a deep copy of the board and move to the next row
                     helper(row + 1, copy.deepcopy(board))
-                    # Remove the queen and backtrack
                     board[row][col] = "."
-                    # Uncomment below to see board state while backtracking
-                    # pprint.pprint(board)
 
-    # List to store all valid board arrangements
     arrangements = []
-    # Call helper function starting from the first row and an empty 8x8 board
     helper(0, [["." for _ in range(8)] for _ in range(8)])
-    # Return all valid arrangements
     return arrangements
-
 
 
 

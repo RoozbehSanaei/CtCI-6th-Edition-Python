@@ -3,22 +3,36 @@ Conversion: Write a function to determine the number of bits you would need to f
 integer A to integer B.
 '''
 
+'''
+    Calculate Differences in Bits:
+        Start by performing a bitwise XOR operation between the two integers, a and b. 
+        This operation will produce a result where each bit is set to 1 if the corresponding bits in a and b are different, and 0 if they are the same. 
+        For example, if a is 1101 and b is 1011, the XOR result will be 0110, indicating the positions where a and b differ.
+
+    Count the Number of Differences:
+        Initialize a counter to keep track of how many bits differ between a and b.
+        
+        The while loop in the function counts and eliminates each differing bit between two numbers, 
+        continuing until no differing bits remain. This count represents the total bit flips required to convert one number into the other.
+            Increment the counter by 1. This step counts one differing bit:
+            Update the XOR result by performing a bitwise AND operation between the current XOR result and one less than the current XOR result. 
+            This operation turns off the rightmost set bit (changing it from 1 to 0). 
+            For instance, if the current XOR result is 0110, subtracting 1 gives 0101, and the AND operation of 0110 & 0101 results in 0100. 
+            This step effectively removes the rightmost set bit from the XOR result.
+
+    Return the Count:
+        After processing all bits, the counter will reflect the total number of bits that need to be flipped to convert a into b.
+        Return this count as the result.
+
+'''
+
 def bit_swap_required(a: int, b: int) -> int:
-    # XOR (^) between a and b gives a number c where the bits that differ between a and b are set to 1.
-    # For example, if a=1101 and b=1011, a ^ b would be 0110.
     count, c = 0, a ^ b
     
-    # This loop counts the number of bits set to 1 in c.
-    # Essentially, it counts the number of bits that need to be flipped to turn a into b.
     while c:
-        # Increment count by 1 for each bit that is set to 1 in c.
         count += 1
-        
-        # Bitwise AND between c and (c - 1) turns off the rightmost 1 in c.
-        # For example, if c is 0110, then c - 1 is 0101, and c & (c - 1) would be 0100.
         c = c & (c - 1)
-    
-    # Return the count of bits needed to be flipped to turn a into b.
+
     return count
 
 

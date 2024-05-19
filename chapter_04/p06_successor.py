@@ -7,11 +7,17 @@ binary search tree. You may assume that each node has a link to its parent.
 
 
 '''
- If the node has a right subtree, the successor is the leftmost node in that right subtree. 
- If not, it goes up the tree until it finds an ancestor where the given node is in the left subtree. 
- It returns the successor node or None if there isn't one.
- '''
- 
+The in_order_successor function determines the in-order successor of a given node in a binary search tree:
+
+    Null Check: If the input node is None, return None.
+
+    Right Child Present: If the input node has a right child, find the leftmost node in the right subtree.
+
+    No Right Child: If no right child, move up the tree using parent pointers.
+        Continue moving up as long as the current node is a right child of its parent.
+
+    Return Ancestor: Return the ancestor node where the current node is a left child. If no such ancestor exists (the input node is the rightmost node), return None.
+'''
 
 def in_order_successor(input_node):
     if input_node is None:
