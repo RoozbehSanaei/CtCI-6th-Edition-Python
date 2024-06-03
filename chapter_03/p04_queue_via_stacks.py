@@ -1,7 +1,7 @@
 # 3.4 Queue Via Stacks
 import unittest
 
-from chapter_03.stack import Stack
+from stack import Stack
 # Implement a MyQueue class which implements a queue using two stacks.
 
 class MyQueue:
@@ -123,3 +123,6 @@ class Tests(unittest.TestCase):
         assert q.remove() == 6
         assert len(q) == 0
         assert not q.remove()
+
+if __name__ == "__main__":
+    unittest.main()

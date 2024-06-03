@@ -1,38 +1,36 @@
-# 3.5 Sort Stacks
 import unittest
 
-from chapter_03.stack import Stack
+class Stack:
+    def __init__(self):
+        self.items = []
 
-'''
-Write a program to sort a stack such that the smallest items are on the top. You can use
-an additional temporary stack, but you may not copy the elements into any other data structure
-(such as an array). The stack supports the following operations: push, pop, peek, and is Empty.
-'''
+    def is_empty(self):
+        return len(self.items) == 0
+
+    def push(self, item):
+        self.items.append(item)
+
+    def pop(self):
+        if not self.is_empty():
+            return self.items.pop()
+
+    def peek(self):
+        if not self.is_empty():
+            return self.items[-1]
+
+    def __len__(self):
+        return len(self.items)
+
 class SortedStack(Stack):
     def __init__(self):
         super().__init__()
         self.temp_stack = Stack()
 
-
-    '''
-    The push method in the code is designed to maintain a sorted order in a stack when inserting a new item. 
-
-        Insert if Stack is Empty or Item is Smaller: If the stack is empty or the new item is smaller than the top item of the stack, it's directly pushed onto the stack.
-
-        Reordering for Larger Items:
-            If the new item is larger than the top item, the method enters a reordering phase.
-            Elements smaller than the new item are temporarily moved to a temp_stack until an appropriate position for the new item is found in the stack.
-
-        Insert New Item: The new item is then pushed onto the stack.
-
-        Restore Elements: Finally, elements from the temp_stack are moved back to the main stack, maintaining the sorted order.
-
-    '''
     def push(self, item):
         if self.is_empty() or item < self.peek():
             super().push(item)
         else:
-            while self.peek() is not None and item > self.peek():
+            while not self.is_empty() and item > self.peek():
                 self.temp_stack.push(self.pop())
 
             super().push(item)
@@ -40,9 +38,9 @@ class SortedStack(Stack):
             while not self.temp_stack.is_empty():
                 super().push(self.temp_stack.pop())
 
-
 class Tests(unittest.TestCase):
     def test_push_one(self):
+
         queue = SortedStack()
         queue.push(1)
         assert len(queue) == 1
@@ -91,3 +89,10 @@ class Tests(unittest.TestCase):
         assert queue.pop() == 2
         assert queue.pop() == 3
         assert queue.pop() == 4
+
+
+if __name__ == '__main__':
+    suite = unittest.TestSuite()
+    suite.addTest(Tests('test_pop_two'))
+    runner = unittest.TextTestRunner()
+    runner.run(suite)

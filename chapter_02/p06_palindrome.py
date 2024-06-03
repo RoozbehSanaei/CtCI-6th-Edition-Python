@@ -1,6 +1,6 @@
 import time
 
-from chapter_02.linked_list import LinkedList
+from linked_list import LinkedList
 
 '''Palindrome: Implement a function to check if a linked list is a palindrome.
 
@@ -174,13 +174,13 @@ def is_palindrome_recursive(ll):
 
 
 test_cases = [
+    ([1, 2, 3, 4, 5], False),
+    ([1, 2], False),
     ([1, 2, 3, 4, 3, 2, 1], True),
     ([1], True),
     (["a", "a"], True),
     ("aba", True),
-    ([], True),
-    ([1, 2, 3, 4, 5], False),
-    ([1, 2], False),
+    ([], True)
 ]
 
 testable_functions = [
