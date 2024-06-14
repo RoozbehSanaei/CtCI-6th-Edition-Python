@@ -124,5 +124,28 @@ class Tests(unittest.TestCase):
         assert len(q) == 0
         assert not q.remove()
 
+    
+    def test_alternate(self):
+        q = MyQueue()
+        q.add(4)
+        a = q.peek()
+        q.add(2)
+        a = q.peek()
+        q.add(5)
+        a = q.peek()
+        q.add(1)
+        a = q.remove()
+        q.add(7)
+        a = q.peek()
+        a = q.peek()
+        a = q.peek()
+
+
+
+
+
+
 if __name__ == "__main__":
-    unittest.main()
+
+    suite = unittest.TestLoader().loadTestsFromTestCase(Tests)
+    unittest.TextTestRunner().run(suite)

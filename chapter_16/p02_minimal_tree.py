@@ -1,3 +1,11 @@
+from typing import Optional, List
+
+'''
+Minimal Tree: 
+Given a sorted (increasing order) array with unique integer elements, 
+write an algorithm to create a binary search tree with minimal height.
+'''
+
 class Node:
     def __init__(self, item):
         self.right = None
@@ -53,19 +61,16 @@ The result is a balanced binary tree constructed from the sorted array.
 
 '''
 
-
-def array_to_binary_tree(array, start, end):
+def array_to_binary_tree(arr: List[int], start: int, end: int) -> Optional[Node]:
     if start > end:
         return None
-    mid = (
-        start + end
-    ) // 2  # This must be floor division, otherwise you get a slice error
-    # TypeError: list indices must be integers or slices, not float
-    root = Node(array[mid])
-    root.left = array_to_binary_tree(array, start, mid - 1)
-    root.right = array_to_binary_tree(array, mid + 1, end)
+    
+    mid = (start + end) // 2
+    root = Node(arr[mid])
+    root.left = array_to_binary_tree(arr, start, mid - 1)
+    root.right = array_to_binary_tree(arr, mid + 1, end)
+    
     return root
-
 
 if __name__ == "__main__":
     test_array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 15, 18, 22, 43, 144, 515, 4123]

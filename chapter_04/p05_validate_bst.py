@@ -1,3 +1,7 @@
+'''
+Implement a function to check if a binary tree is a binary search tree. 
+'''
+
 from chapter_04.binary_search_tree import BinarySearchTree
 from chapter_04.binary_tree import BinaryTree
 

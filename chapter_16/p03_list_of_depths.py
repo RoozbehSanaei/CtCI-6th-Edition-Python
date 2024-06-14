@@ -1,11 +1,21 @@
+'''
+: Given a binary tree, design an algorithm which creates a linked list of all the nodes
+at each depth (e.g., if you have a tree with depth D, you'll have D linked lists).
+'''
+
 from collections import deque
-from chapter_02.linked_list import LinkedList
+import random
+
 
 class BinaryNode:
     def __init__(self, name, left=None, right=None):
         self.name = name
         self.left = left
         self.right = right
+    
+    def __str__(self):
+        return str(self.name)
+
 '''
 The create_node_list_by_depth function generates a dictionary mapping each depth level of a binary tree to a linked list of nodes at that level:
 
@@ -24,6 +34,70 @@ The create_node_list_by_depth function generates a dictionary mapping each depth
     Return Levels: 
         Once the queue is empty, the function returns the levels dictionary, which contains the nodes of the tree organized by their depth levels. Each level is represented by a linked list of the nodes at that level.
 '''
+
+
+class LinkedListNode:
+    def __init__(self, value, next_node=None, prev_node=None):
+        self.value = value
+        self.next = next_node
+        self.prev = prev_node
+
+    def __str__(self):
+        return str(self.value)
+
+
+class LinkedList:
+    def __init__(self, values=None):
+        self.head = None
+        self.tail = None
+        if values is not None:
+            self.add_multiple(values)
+
+    def __iter__(self):
+        current = self.head
+        while current:
+            yield current
+            current = current.next
+
+    def __str__(self):
+        values = [str(x) for x in self]
+        return " -> ".join(values)
+
+    def __len__(self):
+        result = 0
+        node = self.head
+        while node:
+            result += 1
+            node = node.next
+        return result
+
+    def values(self):
+        return [x.value for x in self]
+
+    def add(self, value):
+        if self.head is None:
+            self.tail = self.head = LinkedListNode(value)
+        else:
+            self.tail.next = LinkedListNode(value)
+            self.tail = self.tail.next
+        return self.tail
+
+    def add_to_beginning(self, value):
+        if self.head is None:
+            self.tail = self.head = LinkedListNode(value)
+        else:
+            self.head = LinkedListNode(value, self.head)
+        return self.head
+
+    def add_multiple(self, values):
+        for v in values:
+            self.add(v)
+
+    @classmethod
+    def generate(cls, k, min_value, max_value):
+        return cls(random.choices(range(min_value, max_value), k=k))
+
+
 
 def create_node_list_by_depth(tree_root):
     levels = {}
@@ -111,8 +185,10 @@ def example():
     root.left.right = BinaryNode(4)
     root.right.left = BinaryNode(5)
     root.right.right = BinaryNode(6)
-    levels = create_node_list_by_depth(root)
-    print(levels)
+    levels = create_node_list_by_depth_b(root)
+    for level in range(len(levels)):
+        print(level,":",str(levels[level]))
+
 
 if __name__ == "__main__":
     example()
